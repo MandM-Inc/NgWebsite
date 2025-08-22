@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import { ButtonLink } from '@/components/Button'
 import { CalendarIcon, TagIcon } from '@/components/Icons'
 
 export default function Home() {
@@ -24,18 +24,12 @@ export default function Home() {
               Empowering teens to explore neuroscience and psychology, shaping the future of brain research
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/posts"
-                className="px-8 py-3 bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 text-white rounded-lg font-semibold transition-colors shadow-lg hover:shadow-xl"
-              >
+              <ButtonLink href="/posts" variant="primary" size="lg">
                 Explore Posts
-              </Link>
-              <Link
-                href="/events"
-                className="px-8 py-3 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-purple-600 dark:text-purple-400 rounded-lg font-semibold transition-colors border-2 border-purple-600 dark:border-purple-400 shadow-lg hover:shadow-xl"
-              >
+              </ButtonLink>
+              <ButtonLink href="/events" variant="secondary" size="lg">
                 View Events
-              </Link>
+              </ButtonLink>
             </div>
           </motion.div>
         </div>
@@ -124,12 +118,9 @@ export default function Home() {
             <p className="text-xl text-purple-100 mb-8">
               Be part of a community that&apos;s shaping the future of neuroscience and psychology
             </p>
-            <Link
-              href="/about"
-              className="inline-block px-8 py-3 bg-white hover:bg-gray-100 text-purple-700 rounded-lg font-semibold transition-colors"
-            >
+            <ButtonLink href="/about" variant="subtle" size="lg" className="!bg-white hover:!bg-gray-100 text-purple-700">
               Learn More About Us
-            </Link>
+            </ButtonLink>
           </motion.div>
         </div>
       </section>

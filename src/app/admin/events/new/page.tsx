@@ -7,6 +7,8 @@ import { useAuth } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import MarkdownEditor from '@/components/MarkdownEditor'
 
+export const dynamic = 'force-dynamic'
+
 export default function NewEventPage() {
   const { isAdmin } = useAuth()
   const router = useRouter()

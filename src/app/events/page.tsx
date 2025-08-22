@@ -1,13 +1,17 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
+import { containerStagger, itemFade, viewportOnce } from '@/lib/motion'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { Event } from '@/types/database'
 import { SearchIcon, TagIcon, CalendarIcon, ClockIcon } from '@/components/Icons'
 
+export const dynamic = 'force-dynamic'
+
 export default function EventsPage() {
+  useReducedMotion()
   const [events, setEvents] = useState<Event[]>([])
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([])
   const [searchQuery, setSearchQuery] = useState('')
@@ -218,15 +222,19 @@ export default function EventsPage() {
               </p>
             </div>
           ) : (
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {filteredEvents.map((event, index) => {
+            <motion.div
+              variants={containerStagger(0.06, 0.1)}
+              initial="hidden"
+              whileInView="show"
+              viewport={viewportOnce}
+              className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+            >
+              {filteredEvents.map((event) => {
                 const eventStatus = getEventStatus(event.start_date, event.end_date)
                 return (
                   <motion.article
                     key={event.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
+                    variants={itemFade(18, 0.45)}
                     className="post-card group bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 relative"
                   >
                     {/* Status ribbon */}
@@ -300,7 +308,7 @@ export default function EventsPage() {
                   </motion.article>
                 )
               })}
-            </div>
+            </motion.div>
             )
           )}
         </motion.div>

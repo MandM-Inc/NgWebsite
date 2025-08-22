@@ -18,6 +18,8 @@ interface Analytics {
   upcomingEvents: Event[]
 }
 
+export const dynamic = 'force-dynamic'
+
 export default function AdminDashboard() {
   const { isAdmin, logout } = useAuth()
   const router = useRouter()

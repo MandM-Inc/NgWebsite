@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/lib/theme";
 import { AuthProvider } from "@/lib/auth";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -18,34 +17,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                const theme = localStorage.getItem('theme');
-                if (theme === 'dark') {
-                  document.documentElement.classList.add('dark');
-                }
-              })();
-            `,
-          }}
-        />
-      </head>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <head></head>
       <body className="antialiased">
         <ErrorBoundary>
           <AuthProvider>
-            <ThemeProvider>
-              <ClientErrorHandler />
-              <div className="min-h-screen flex flex-col">
-                <Navigation />
-                <main className="flex-grow">
-                  {children}
-                </main>
-                <Footer />
-              </div>
-            </ThemeProvider>
+            <ClientErrorHandler />
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-md focus:bg-white focus:text-gray-900 dark:focus:bg-gray-900 dark:focus:text-white focus:shadow-md"
+            >
+              Skip to content
+            </a>
+            <div className="min-h-screen flex flex-col">
+              <Navigation />
+              <main id="main-content" className="flex-grow">
+                {children}
+              </main>
+              <Footer />
+            </div>
           </AuthProvider>
         </ErrorBoundary>
       </body>

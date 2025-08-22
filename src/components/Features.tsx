@@ -1,6 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
+import { containerStagger, itemFade, viewportOnce } from '@/lib/motion'
 
 const features = [
   {
@@ -36,6 +37,7 @@ const features = [
 ]
 
 export default function Features() {
+  const prefersReduced = useReducedMotion()
   return (
     <section id="features" className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -48,14 +50,18 @@ export default function Features() {
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-            {features.map((feature, index) => (
+          <motion.dl
+            variants={containerStagger(0.08, 0.15)}
+            initial="hidden"
+            whileInView="show"
+            viewport={viewportOnce}
+            className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3"
+          >
+            {features.map((feature) => (
               <motion.div
                 key={feature.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
+                variants={itemFade(18, 0.45)}
+                whileHover={prefersReduced ? undefined : { y: -4, scale: 1.02 }}
                 className="flex flex-col"
               >
                 <dt className="text-base font-semibold leading-7 text-gray-900 dark:text-white">
@@ -69,7 +75,7 @@ export default function Features() {
                 </dd>
               </motion.div>
             ))}
-          </dl>
+          </motion.dl>
         </div>
       </div>
     </section>

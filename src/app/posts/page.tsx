@@ -1,13 +1,15 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
+import { containerStagger, itemFade, viewportOnce } from '@/lib/motion'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { Post } from '@/types/database'
 import { SearchIcon, TagIcon, CalendarIcon } from '@/components/Icons'
 
 export default function PostsPage() {
+  useReducedMotion()
   const [posts, setPosts] = useState<Post[]>([])
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([])
   const [searchQuery, setSearchQuery] = useState('')
@@ -182,13 +184,17 @@ export default function PostsPage() {
                 </p>
               </div>
             ) : (
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {filteredPosts.map((post, index) => (
+              <motion.div
+                variants={containerStagger(0.06, 0.1)}
+                initial="hidden"
+                whileInView="show"
+                viewport={viewportOnce}
+                className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+              >
+                {filteredPosts.map((post) => (
                   <motion.article
                     key={post.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
+                    variants={itemFade(18, 0.45)}
                     className="post-card group bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md overflow-hidden border border-gray-200 dark:border-gray-700"
                   >
                     {/* Gradient accent bar */}
@@ -238,7 +244,7 @@ export default function PostsPage() {
                     </Link>
                   </motion.article>
                 ))}
-              </div>
+              </motion.div>
             )
           )}
         </motion.div>

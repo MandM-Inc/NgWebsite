@@ -8,6 +8,8 @@ import { supabase } from '@/lib/supabase'
 import MarkdownEditor from '@/components/MarkdownEditor'
 // import { Event } from '@/types/database'
 
+export const dynamic = 'force-dynamic'
+
 export default function EditEventPage() {
   const { isAdmin } = useAuth()
   const router = useRouter()

@@ -13,6 +13,8 @@ interface CommentWithContent extends Comment {
   event?: Event
 }
 
+export const dynamic = 'force-dynamic'
+
 export default function CommentsManagementPage() {
   const { isAdmin } = useAuth()
   const router = useRouter()

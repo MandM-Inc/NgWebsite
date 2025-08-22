@@ -8,6 +8,8 @@ import { useAuth } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import { Post, Event } from '@/types/database'
 
+export const dynamic = 'force-dynamic'
+
 export default function ContentManagementPage() {
   const { isAdmin } = useAuth()
   const router = useRouter()

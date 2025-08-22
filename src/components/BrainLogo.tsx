@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Brain } from 'lucide-react'
+import Image from 'next/image'
 
 interface BrainLogoProps {
   className?: string
@@ -18,10 +18,10 @@ export default function BrainLogo({ className = "w-8 h-8", animated = true }: Br
         whileHover={{ opacity: 0.8 }}
         whileTap={{ opacity: 0.6 }}
       >
-        <Brain className={className} />
+        <Image src="/NGLogo.png" alt="NG Logo" width={32} height={32} className={className} />
       </motion.div>
     )
   }
 
-  return <Brain className={className} />
+  return <Image src="/NGLogo.png" alt="NG Logo" width={32} height={32} className={className} />
 }
