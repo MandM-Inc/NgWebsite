@@ -8,12 +8,13 @@ The official website for NeuroGeneration (NG), a teen-led organization focused o
 - 📅 Event management with date/time tracking
 - 💬 Comments system for community engagement
 - 🎨 Beautiful purple-themed design with dark/light mode
-- 🔐 Admin dashboard for content management
-- 📊 Analytics tracking for posts and events
+- 🔐 Admin login and settings (password change; demo only)
+- 📊 Analytics tracking for posts and events (RPC-based click counts)
 - 🎯 SEO optimized with responsive design
+- ☁️ Supabase client initialized in-browser (avoids SSR/prerender issues)
 - 🌐 Social media integration (RedNote/Xiaohongshu, WeChat, Instagram, Twitter)
 - 🧠 Focus on neuroscience and psychology content
-- 📱 Community database for resource sharing
+- 📱 Community database page (under construction)
 
 ## Tech Stack
 
@@ -55,8 +56,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
 4. Set up the database:
-   - Follow the instructions in [DATABASE_SETUP.md](DATABASE_SETUP.md)
-   - Or see [SUPABASE_SETUP.md](SUPABASE_SETUP.md) for detailed Supabase setup
+   - Follow the instructions in [DATABASE_SETUP.md](DATABASE_SETUP.md) (use `supabase/schema-clean.sql`; optional `supabase/demo-content.sql`)
 
 5. Run the development server:
 ```bash
@@ -73,18 +73,44 @@ src/
 │   ├── posts/       # Blog posts
 │   ├── events/      # Event pages
 │   ├── admin/       # Admin dashboard
-│   └── community-database/  # Community resources
+│   └── community-database/  # Community resources (under construction)
 ├── components/       # Reusable React components
 ├── lib/             # Utilities and configurations
 ├── types/           # TypeScript type definitions
 └── supabase/        # Database schema and demo data
 ```
 
+## Routing
+
+- `/` Home page
+- `/posts` Posts listing
+- `/posts/[id]` Post detail (comments + reading progress)
+- `/events` Events listing and search (supports `@tag:` and `@content:` filters)
+- `/admin` Admin login
+- `/admin/dashboard` Admin dashboard (analytics + quick links)
+- `/admin/settings` Admin settings (change password)
+- `/community-database` Placeholder page (under construction)
+
 ## Admin Access
 
-Access the admin panel at `/admin` with password: `ng-admin-2024`
+Access the admin panel at `/admin` with default password: `ng-admin-2024`.
 
-**Note**: For production, implement proper authentication using Supabase Auth.
+Notes:
+- Storage keys (demo only; see `src/lib/auth.tsx`):
+  - `localStorage`: `isAdmin` = `"true"` after login; `adminPasswordHash` = base64-encoded password.
+  - `sessionStorage`: `adminPassword` (plaintext; used by `/admin/settings` to verify current password).
+- Default password fallback: if `adminPasswordHash` is missing or invalid, the app falls back to `ng-admin-2024`.
+- Change the password at `/admin/settings`: verifies the current session password and updates both storages; then redirects to `/admin/dashboard`.
+- Production: implement proper authentication (e.g., Supabase Auth) and drop the dev "Allow all operations" RLS policies in `supabase/schema-clean.sql` (see `DATABASE_SETUP.md`).
+
+## Analytics & Click Tracking
+
+- Click counts increment on detail pages via Supabase RPC:
+  - Posts: `src/app/posts/[id]/page.tsx` calls `supabase.rpc('increment_click_count', { table_name: 'posts', item_id: id })` on load.
+  - Events: `src/app/events/[id]/page.tsx` calls the same with `table_name: 'events'`.
+- RPC definition: `increment_click_count` lives in `supabase/schema-clean.sql` (SECURITY DEFINER) and updates the `click_count` column.
+- Admin dashboard aggregation: `src/app/admin/dashboard/page.tsx` sums `click_count` across `posts` and `events` for "Total Views" and surfaces popular posts by `click_count`.
+- RLS note: dev schema includes permissive policies for convenience. For production, remove them and ensure policies permit reading counts and executing the RPC.
 
 ## Available Scripts
 
@@ -95,12 +121,23 @@ yarn start      # Start production server
 yarn lint       # Run ESLint
 ```
 
+## Deployment
+
+See `DEPLOYMENT.md` for options (Vercel, Netlify, VPS) and environment variable guidance.
+
+## Data Model Highlights
+
+- Posts: id, title, content, tag, published_date, is_draft, click_count, created_at, updated_at
+- Events: id, title, content, tag, start_date, duration, end_date, is_draft, click_count, created_at, updated_at
+- Comments: id, post_id OR event_id, author_name, content, created_at (mutually exclusive post/event reference)
+- RLS: enabled; public read of non-draft posts/events, public comment insert. `schema-clean.sql` includes dev "allow all" policies—remove for production.
+
 ## Recent Updates
 
 - Added psychology focus alongside neuroscience throughout the website
 - Integrated social media logos for RedNote/Xiaohongshu, WeChat, Instagram, and Twitter
 - Improved footer design with 3-column layout and quick links
-- Enhanced community database section for resource sharing
+- Added placeholder Community Database page (content coming soon)
 
 ## Contributing
 

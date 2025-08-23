@@ -105,6 +105,27 @@ The schema automatically enables RLS. If you're having permission issues:
 - Row Level Security policies
 - Indexes for performance
 
+## Production Hardening (remove dev policies)
+
+The `supabase/schema-clean.sql` includes permissive "Allow all operations" policies for development:
+- `Allow all operations on posts` (posts)
+- `Allow all operations on events` (events)
+- `Allow all operations on comments` (comments)
+
+For production, drop these policies and keep RLS enabled:
+```sql
+DROP POLICY IF EXISTS "Allow all operations on posts" ON posts;
+DROP POLICY IF EXISTS "Allow all operations on events" ON events;
+DROP POLICY IF EXISTS "Allow all operations on comments" ON comments;
+```
+
+This leaves only:
+- Public read of non-draft posts and events
+- Public read of comments
+- Public create of comments
+
+If you implement Supabase Auth and JWT-based roles, see `supabase/schema.sql` for example "admin" policies using `auth.jwt() ->> 'role' = 'admin'`. Do not enable those until your app issues JWTs containing that claim.
+
 ## Next Steps
 
 After setting up the database:
