@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useTheme } from '@/lib/theme'
 
 interface BrainLogoProps {
   className?: string
@@ -9,6 +10,8 @@ interface BrainLogoProps {
 }
 
 export default function BrainLogo({ className = "w-8 h-8", animated = true }: BrainLogoProps) {
+  const { theme } = useTheme()
+  const src = theme === 'dark' ? '/NGLogoDarkMode.png' : '/NGLogoWhiteMode.png'
   if (animated) {
     return (
       <motion.div
@@ -18,10 +21,10 @@ export default function BrainLogo({ className = "w-8 h-8", animated = true }: Br
         whileHover={{ opacity: 0.8 }}
         whileTap={{ opacity: 0.6 }}
       >
-        <Image src="/NGLogo.png" alt="NG Logo" width={32} height={32} className={className} />
+        <Image src={src} alt="NG Logo" width={32} height={32} className={className} />
       </motion.div>
     )
   }
 
-  return <Image src="/NGLogo.png" alt="NG Logo" width={32} height={32} className={className} />
+  return <Image src={src} alt="NG Logo" width={32} height={32} className={className} />
 }

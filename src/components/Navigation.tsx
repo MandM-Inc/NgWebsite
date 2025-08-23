@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
+import { useTheme } from '@/lib/theme'
+import { MoonIcon, SunIcon } from './Icons'
 import BrainLogo from './BrainLogo'
 
 const navItems = [
@@ -17,6 +19,7 @@ const navItems = [
 export default function Navigation() {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { theme, toggleTheme } = useTheme()
 
   return (
     <nav className="sticky top-0 z-50 bg-white/95 dark:bg-gray-950/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
@@ -56,7 +59,18 @@ export default function Navigation() {
               })}
             </div>
 
-            
+            {/* Theme toggle */}
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              className="hidden md:inline-flex items-center justify-center p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-950"
+            >
+              {theme === 'dark' ? (
+                <SunIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              ) : (
+                <MoonIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              )}
+            </button>
 
             {/* Mobile menu button */}
             <button
@@ -99,16 +113,29 @@ export default function Navigation() {
             >
               <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-800">
                 <span className="text-lg font-semibold text-gray-900 dark:text-white">Menu</span>
-                <button
-                  onClick={() => setMobileOpen(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-950"
-                  aria-label="Close menu"
-                >
-                  <svg className="w-5 h-5 text-gray-700 dark:text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={toggleTheme}
+                    aria-label="Toggle theme"
+                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-950"
+                  >
+                    {theme === 'dark' ? (
+                      <SunIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                    ) : (
+                      <MoonIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setMobileOpen(false)}
+                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-950"
+                    aria-label="Close menu"
+                  >
+                    <svg className="w-5 h-5 text-gray-700 dark:text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
+                </div>
               </div>
               <div className="flex-1 overflow-y-auto py-2">
                 {navItems.map((item) => {

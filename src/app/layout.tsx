@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
+import { ThemeProvider } from "@/lib/theme";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -9,6 +10,7 @@ import ClientErrorHandler from "@/components/ClientErrorHandler";
 export const metadata: Metadata = {
   title: "NeuroGeneration - Official Website",
   description: "The official website for the NG teens organization",
+  icons: { icon: "/favicon.ico" },
 };
 
 export default function RootLayout({
@@ -17,13 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
-      <head></head>
+    <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
         <ErrorBoundary>
           <AuthProvider>
-            <ClientErrorHandler />
-            <a
+            <ThemeProvider>
+              <ClientErrorHandler />
+              <a
               href="#main-content"
               className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-md focus:bg-white focus:text-gray-900 dark:focus:bg-gray-900 dark:focus:text-white focus:shadow-md"
             >
@@ -36,6 +38,7 @@ export default function RootLayout({
               </main>
               <Footer />
             </div>
+            </ThemeProvider>
           </AuthProvider>
         </ErrorBoundary>
       </body>

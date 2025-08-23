@@ -118,8 +118,8 @@ export default function Home() {
             <p className="text-xl text-purple-100 mb-8">
               Be part of a community that&apos;s shaping the future of neuroscience and psychology
             </p>
-            <ButtonLink href="/about" variant="subtle" size="lg" className="!bg-white hover:!bg-gray-100 text-purple-700">
-              Learn More About Us
+            <ButtonLink href="/about" variant="subtle" size="lg" className="!bg-white hover:!bg-gray-100 text-purple-700 dark:!text-black">
+写·              Learn More About Us
             </ButtonLink>
           </motion.div>
         </div>
