@@ -1,33 +1,75 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import { ButtonLink } from '@/components/Button'
 import { CalendarIcon, TagIcon } from '@/components/Icons'
 
 export default function Home() {
+  const [images, setImages] = useState<string[]>([])
+  const [bgIndex, setBgIndex] = useState(0)
+
+  useEffect(() => {
+    let cancelled = false
+    async function loadImages() {
+      try {
+        const res = await fetch('/api/gallery', { cache: 'no-store' })
+        const data = await res.json()
+        if (!cancelled && Array.isArray(data.images)) {
+          setImages(data.images)
+          setBgIndex(0)
+        }
+      } catch {
+        // ignore; keep default empty list
+      }
+    }
+    loadImages()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  useEffect(() => {
+    if (images.length <= 1) return
+    const id = setInterval(() => setBgIndex((i) => (i + 1) % images.length), 7000)
+    return () => clearInterval(id)
+  }, [images])
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950">
       {/* Hero Section */}
-      <section className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <section className="relative border-b border-gray-200 dark:border-gray-800">
+        {/* Background image layer */}
+        <div className="absolute inset-0">
+          <motion.div
+            key={images[bgIndex]}
+            initial={{ opacity: 0.4 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: images.length ? `url(${images[bgIndex]})` : 'none', backgroundColor: images.length ? undefined : '#111827' }}
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 text-gray-900 dark:text-white">
+            <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 text-white">
               NeuroGeneration
             </h1>
-            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-200 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
               Empowering teens to explore neuroscience and psychology, shaping the future of brain research
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <ButtonLink href="/posts" variant="primary" size="lg">
                 Explore Posts
               </ButtonLink>
-              <ButtonLink href="/events" variant="secondary" size="lg">
+              <ButtonLink href="/events" variant="primary" size="lg">
                 View Events
               </ButtonLink>
             </div>

@@ -23,6 +23,13 @@ export default function AboutPage() {
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
               We are NeuroGeneration (NG), a non-profit organization founded by high school students passionate about neuroscience and psychology!
             </p>
+            <div className="mt-10">
+              <img
+                src="/AboutPage.jpg"
+                alt="NeuroGeneration team"
+                className="mx-auto w-full max-w-4xl rounded-xl shadow-lg border border-gray-200 dark:border-gray-700"
+              />
+            </div>
           </motion.div>
         </div>
       </section>

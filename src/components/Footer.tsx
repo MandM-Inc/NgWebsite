@@ -100,7 +100,9 @@ export default function Footer() {
               
               {/* Twitter */}
               <a
-                href="#"
+                href="https://x.com/NeuGen2025"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex flex-col items-center gap-1 text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-all hover:scale-110"
                 aria-label="Twitter"
               >

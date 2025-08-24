@@ -1,12 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useAuth } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import MarkdownEditor from '@/components/MarkdownEditor'
 // import { Post } from '@/types/database'
+
+const IMAGES_BUCKET = process.env.NEXT_PUBLIC_SUPABASE_IMAGES_BUCKET || 'images'
 
 export const dynamic = 'force-dynamic'
 
@@ -25,6 +27,10 @@ export default function EditPostPage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [uploadingImage, setUploadingImage] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!isAdmin) {
@@ -88,6 +94,62 @@ export default function EditPostPage() {
       alert('Error saving post: ' + (error instanceof Error ? error.message : 'Unknown error'))
     } finally {
       setSaving(false)
+    }
+  }
+
+  function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files && e.target.files[0] ? e.target.files[0] : null
+    setImageFile(file)
+    if (file) {
+      const url = URL.createObjectURL(file)
+      setImagePreview(url)
+    } else {
+      setImagePreview(null)
+    }
+  }
+
+  async function handleImageUpload() {
+    if (!imageFile) {
+      alert('Please choose an image first')
+      return
+    }
+    try {
+      setUploadingImage(true)
+      setUploadError(null)
+      const fileExt = imageFile.name.split('.').pop()?.toLowerCase() || 'png'
+      const fileName = `${postId}-${Date.now()}.${fileExt}`
+      const filePath = `posts/${postId}/${fileName}`
+
+      const { error: uploadError } = await supabase.storage
+        .from(IMAGES_BUCKET)
+        .upload(filePath, imageFile, {
+          contentType: imageFile.type || 'image/*'
+        })
+
+      if (uploadError) throw uploadError
+
+      const { data: publicUrlData } = supabase.storage
+        .from(IMAGES_BUCKET)
+        .getPublicUrl(filePath)
+
+      const publicUrl = publicUrlData.publicUrl
+      if (!publicUrl) throw new Error('Failed to get public URL')
+
+      const altText = imageFile.name.replace(/\.[^/.]+$/, '')
+      const markdownToInsert = `\n\n![${altText}](${publicUrl})\n\n`
+      setPost({ ...post, content: post.content + markdownToInsert })
+
+      // Clear selection
+      setImageFile(null)
+      setImagePreview(null)
+      alert('Image uploaded and inserted into content')
+    } catch (err) {
+      const message = err instanceof Error ? err.message : typeof err === 'string' ? err : JSON.stringify(err)
+      console.error('Error uploading image:', message)
+      setUploadError(message)
+      alert(`Error uploading image: ${message}\n\nTip: ensure a public Storage bucket named "images" exists and your client has permission to upload.`)
+    } finally {
+      setUploadingImage(false)
     }
   }
 
@@ -161,6 +223,37 @@ export default function EditPostPage() {
                   className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                   placeholder="Enter tag (optional)"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Upload Image
+                </label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="block w-full text-sm text-gray-700 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 dark:file:bg-gray-700 dark:file:text-gray-200"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleImageUpload}
+                    disabled={uploadingImage || !imageFile}
+                    className="px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white rounded-lg"
+                  >
+                    {uploadingImage ? 'Uploading…' : 'Upload & Insert'}
+                  </button>
+                </div>
+                {imagePreview && (
+                  <div className="mt-3">
+                    <img src={imagePreview} alt="Preview" className="max-h-48 rounded-lg border border-gray-200 dark:border-gray-700" />
+                  </div>
+                )}
+                {uploadError && (
+                  <p className="mt-2 text-sm text-red-600 dark:text-red-400">{uploadError}</p>
+                )}
+                <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">Images are uploaded to the '{IMAGES_BUCKET}' bucket and inserted into content as Markdown.</p>
               </div>
 
               <div>
