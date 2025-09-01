@@ -131,7 +131,7 @@ export default function PostsPage() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4 bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4 bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-200 dark:to-gray-400 bg-clip-text text-transparent">
               Posts
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -148,7 +148,7 @@ export default function PostsPage() {
                 placeholder="Search by title or use @tag, @content..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400"
+                className="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400"
               />
             </div>
           </div>
@@ -175,7 +175,7 @@ export default function PostsPage() {
           {!error && (
             loading ? (
               <div className="text-center py-12">
-                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-gray-500"></div>
               </div>
             ) : filteredPosts.length === 0 ? (
               <div className="text-center py-12">
@@ -198,19 +198,19 @@ export default function PostsPage() {
                     className="post-card group bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md overflow-hidden border border-gray-200 dark:border-gray-700"
                   >
                     {/* Gradient accent bar */}
-                    <div className="h-1 bg-gradient-to-r from-purple-500 to-purple-700 dark:from-purple-400 dark:to-purple-600" />
+                    <div className="h-1 bg-gradient-to-r from-gray-500 to-gray-700 dark:from-gray-400 dark:to-gray-600" />
                     
                     <Link href={`/posts/${post.id}`} className="block p-8">
                       {/* Tag */}
                       {post.tag && (
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 text-xs font-medium text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/30 rounded-full">
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/30 rounded-full">
                           <TagIcon className="w-3 h-3" />
                           <span>{post.tag}</span>
                         </div>
                       )}
                       
                       {/* Title */}
-                      <h2 className="text-2xl font-serif font-bold mb-3 text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-2">
+                      <h2 className="text-2xl font-serif font-bold mb-3 text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors line-clamp-2">
                         {post.title}
                       </h2>
                       
@@ -235,7 +235,7 @@ export default function PostsPage() {
                         </div>
                         
                         {/* Read more arrow */}
-                        <div className="text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <div className="text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                           </svg>

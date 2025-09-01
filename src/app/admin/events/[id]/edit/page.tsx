@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { useAuth } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import MarkdownEditor from '@/components/MarkdownEditor'
+import ImageUpload from '@/components/ImageUpload'
 // import { Event } from '@/types/database'
 
 export const dynamic = 'force-dynamic'
@@ -99,6 +100,10 @@ export default function EditEventPage() {
     } finally {
       setSaving(false)
     }
+  }
+
+  function handleImageInserted(markdownText: string) {
+    setEvent({ ...event, content: event.content + '\n\n' + markdownText + '\n\n' })
   }
 
   const parseDuration = (duration: string) => {
@@ -248,6 +253,14 @@ export default function EditEventPage() {
                   value={event.content}
                   onChange={(content) => setEvent({ ...event, content })}
                   placeholder="Write your event content here... You can use Markdown and LaTeX!"
+                />
+              </div>
+
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+                <ImageUpload
+                  onImageInserted={handleImageInserted}
+                  entityType="events"
+                  entityId={eventId}
                 />
               </div>
 

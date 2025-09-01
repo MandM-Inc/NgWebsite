@@ -76,7 +76,7 @@ export default function AboutPage() {
                   onClick={() => setActiveTab(tab as 'mission' | 'current' | 'philosophy')}
                   className={`px-6 py-3 font-medium transition-colors first:rounded-l-lg last:rounded-r-lg ${
                     activeTab === tab
-                      ? 'bg-purple-600 text-white'
+                      ? 'bg-gray-800 dark:bg-gray-700 text-white'
                       : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                   }`}
                 >
@@ -131,7 +131,7 @@ export default function AboutPage() {
                   <p className="text-gray-600 dark:text-gray-300 mb-2">
                     WeChat Official Account, Xiaohongshu, etc.
                   </p>
-                  <p className="text-purple-600 dark:text-purple-400">
+                  <p className="text-gray-700 dark:text-gray-300">
                     Your creativity and talent are urgently needed!
                   </p>
                 </div>
@@ -142,7 +142,7 @@ export default function AboutPage() {
                   <p className="text-gray-600 dark:text-gray-300 mb-2">
                     Popular science articles + original research by students
                   </p>
-                  <p className="text-purple-600 dark:text-purple-400">
+                  <p className="text-gray-700 dark:text-gray-300">
                     We welcome your submissions!
                   </p>
                 </div>
@@ -153,7 +153,7 @@ export default function AboutPage() {
                   <p className="text-gray-600 dark:text-gray-300 mb-2">
                     Organizing and co-hosting national neuroscience and psychology forums
                   </p>
-                  <p className="text-purple-600 dark:text-purple-400">
+                  <p className="text-gray-700 dark:text-gray-300">
                     We connect high school students nationwide to collectively drive neuroscience and psychology education forward in China.
                   </p>
                 </div>
@@ -162,7 +162,7 @@ export default function AboutPage() {
 
             {activeTab === 'philosophy' && (
               <div className="max-w-4xl mx-auto text-center">
-                <div className="bg-purple-600 dark:bg-purple-700 rounded-2xl p-12 text-white">
+                <div className="bg-gray-800 dark:bg-gray-700 rounded-2xl p-12 text-white">
                   <h3 className="text-3xl font-serif font-bold mb-6">
                     &ldquo;Mind Matters, Brain Connects.&rdquo;
                   </h3>

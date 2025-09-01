@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { useTheme } from '@/lib/theme'
 
 interface BrainLogoProps {
   className?: string
@@ -10,8 +9,7 @@ interface BrainLogoProps {
 }
 
 export default function BrainLogo({ className = "w-8 h-8", animated = true }: BrainLogoProps) {
-  const { theme } = useTheme()
-  const src = theme === 'dark' ? '/NGLogoDarkMode.png' : '/NGLogoWhiteMode.png'
+  const src = '/NGLogoDarkMode.png'
   if (animated) {
     return (
       <motion.div

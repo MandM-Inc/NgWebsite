@@ -20,7 +20,7 @@ export async function GET() {
       .map((f) => `/gallery/${f}`)
 
     return NextResponse.json({ images }, { status: 200 })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ images: [], error: 'Failed to list gallery' }, { status: 500 })
   }
 }

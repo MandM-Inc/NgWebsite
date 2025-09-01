@@ -42,7 +42,7 @@ export default function Features() {
     <section id="features" className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">
+          <h2 className="text-base font-semibold leading-7 text-gradient">
             Tech Stack
           </h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
@@ -62,10 +62,10 @@ export default function Features() {
                 key={feature.name}
                 variants={itemFade(18, 0.45)}
                 whileHover={prefersReduced ? undefined : { y: -4, scale: 1.02 }}
-                className="flex flex-col"
+                className="glass-panel flex flex-col p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
               >
                 <dt className="text-base font-semibold leading-7 text-gray-900 dark:text-white">
-                  <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                  <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600">
                     <span className="text-2xl">{feature.icon}</span>
                   </div>
                   {feature.name}

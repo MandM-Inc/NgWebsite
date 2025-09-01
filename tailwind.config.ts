@@ -10,23 +10,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Remap the "purple" scale to a green palette to switch site primary color
-        // without changing class names across the codebase.
-        purple: {
-          50: '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981',
-          600: '#059669',
-          700: '#047857',
-          800: '#065f46',
-          900: '#064e3b',
-          950: '#022c22',
-        },
+        // Custom purple-blue gradient colors
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          light: "var(--primary-light)",
+          dark: "var(--primary-dark)",
+        },
+        accent: {
+          DEFAULT: "var(--accent)",
+          light: "var(--accent-light)",
+          dark: "var(--accent-dark)",
+        },
+      },
+      backgroundImage: {
+        radial: 'radial-gradient(var(--tw-gradient-stops))',
+        conic: 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       fontFamily: {
         'serif': ['Crimson Text', 'Georgia', 'serif'],

@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { useAuth } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import MarkdownEditor from '@/components/MarkdownEditor'
+import ImageUpload from '@/components/ImageUpload'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,6 +20,7 @@ export default function NewPostPage() {
     is_draft: false
   })
   const [saving, setSaving] = useState(false)
+  const [postId, setPostId] = useState<string | null>(null)
 
   useEffect(() => {
     if (!isAdmin) {
@@ -34,7 +36,7 @@ export default function NewPostPage() {
 
     setSaving(true)
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('posts')
         .insert({
           title: post.title,
@@ -46,6 +48,11 @@ export default function NewPostPage() {
         .single()
 
       if (error) throw error
+      
+      // Store the post ID for image uploads
+      if (data) {
+        setPostId(data.id)
+      }
 
       router.push('/admin/content')
     } catch (error) {
@@ -54,6 +61,10 @@ export default function NewPostPage() {
     } finally {
       setSaving(false)
     }
+  }
+
+  function handleImageInserted(markdownText: string) {
+    setPost({ ...post, content: post.content + '\n\n' + markdownText + '\n\n' })
   }
 
   return (
@@ -112,6 +123,14 @@ export default function NewPostPage() {
                   value={post.content}
                   onChange={(content) => setPost({ ...post, content })}
                   placeholder="Write your post content here... You can use Markdown and LaTeX!"
+                />
+              </div>
+
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+                <ImageUpload
+                  onImageInserted={handleImageInserted}
+                  entityType="posts"
+                  entityId={postId || 'temp'}
                 />
               </div>
 

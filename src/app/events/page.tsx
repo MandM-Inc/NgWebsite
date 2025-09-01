@@ -127,7 +127,6 @@ export default function EventsPage() {
     }
   }
 
-
   const truncateContent = (content: string, maxLength: number = 150) => {
     // Remove markdown formatting for preview
     const plainText = content
@@ -161,7 +160,7 @@ export default function EventsPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <main className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -169,10 +168,10 @@ export default function EventsPage() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4 bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4 text-gray-100">
               Events
             </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
               Join our workshops, seminars, and hands-on activities designed to deepen your understanding of neuroscience and psychology
             </p>
           </div>
@@ -186,7 +185,7 @@ export default function EventsPage() {
                 placeholder="Search by title or use @tag, @content..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400"
+                className="w-full pl-12 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-900 border border-gray-800 text-gray-100 placeholder:text-gray-500"
               />
             </div>
           </div>
@@ -213,11 +212,11 @@ export default function EventsPage() {
           {!error && (
             loading ? (
             <div className="text-center py-12">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-gray-500"></div>
             </div>
           ) : filteredEvents.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-gray-400">
                 {searchQuery ? 'No events found matching your search.' : 'No events available yet.'}
               </p>
             </div>
@@ -235,59 +234,56 @@ export default function EventsPage() {
                   <motion.article
                     key={event.id}
                     variants={itemFade(18, 0.45)}
-                    className="post-card group bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 relative"
+                    className="post-card group glass-panel rounded-xl overflow-hidden relative"
                   >
-                    {/* Status ribbon */}
-                    <div className={`absolute top-4 right-4 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
-                      eventStatus.status === 'ongoing' 
-                        ? 'bg-green-500 text-white'
+                    {/* Status ribbon (neutral) */}
+                    <div className={`absolute top-4 right-4 z-10 px-3 py-1 rounded-full text-xs font-medium border ${
+                      eventStatus.status === 'ongoing'
+                        ? 'bg-gray-800 text-gray-100 border-gray-700'
                         : eventStatus.status === 'today' || eventStatus.status === 'tomorrow'
-                        ? 'bg-purple-600 text-white'
+                        ? 'bg-gray-900 text-gray-300 border-gray-800'
                         : eventStatus.status === 'upcoming'
-                        ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                        ? 'bg-gray-900 text-gray-300 border-gray-800'
+                        : 'bg-gray-900 text-gray-500 border-gray-800'
                     }`}>
                       {eventStatus.label}
                     </div>
                     
-                    {/* Gradient accent bar */}
-                    <div className="h-1 bg-gradient-to-r from-purple-500 to-purple-700 dark:from-purple-400 dark:to-purple-600" />
-                    
                     <Link href={`/events/${event.id}`} className="block p-8">
                       {/* Tag */}
                       {event.tag && (
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 text-xs font-medium text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/30 rounded-full">
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 text-xs font-medium text-gray-300 bg-gray-800 rounded-full">
                           <TagIcon className="w-3 h-3" />
                           <span>{event.tag}</span>
                         </div>
                       )}
                       
                       {/* Title */}
-                      <h2 className="text-2xl font-serif font-bold mb-3 text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-2">
+                      <h2 className="text-2xl font-serif font-bold mb-3 text-gray-100 group-hover:text-white transition-colors line-clamp-2">
                         {event.title}
                       </h2>
                       
                       {/* Content preview */}
-                      <p className="text-gray-600 dark:text-gray-300 mb-5 line-clamp-3 leading-relaxed">
+                      <p className="text-gray-300 mb-5 line-clamp-3 leading-relaxed">
                         {truncateContent(event.content, 180)}
                       </p>
                       
                       {/* Event details */}
                       <div className="space-y-3 mb-5">
-                        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                          <CalendarIcon className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                        <div className="flex items-center gap-2 text-sm text-gray-400">
+                          <CalendarIcon className="w-4 h-4 text-gray-400" />
                           <span className="font-medium">{formatDate(event.start_date)}</span>
                         </div>
                         
-                        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                          <ClockIcon className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                        <div className="flex items-center gap-2 text-sm text-gray-400">
+                          <ClockIcon className="w-4 h-4 text-gray-400" />
                           <span>{formatTime(event.start_date)} • {formatDuration(event.duration)}</span>
                         </div>
                       </div>
                       
                       {/* Footer */}
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
-                        <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                      <div className="flex items-center justify-between pt-4 border-t border-gray-800">
+                        <div className="flex items-center gap-4 text-sm text-gray-400">
                           <div className="flex items-center gap-1.5">
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -298,7 +294,7 @@ export default function EventsPage() {
                         </div>
                         
                         {/* Register/Learn more arrow */}
-                        <div className="text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <div className="text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                           </svg>

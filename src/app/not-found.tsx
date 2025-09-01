@@ -6,7 +6,7 @@ import { Brain, Home, ArrowLeft } from 'lucide-react'
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-purple-50 to-white dark:from-gray-900 dark:to-gray-950 flex items-center justify-center px-4">
+    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950 flex items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -15,7 +15,7 @@ export default function NotFound() {
       >
         {/* Brain icon */}
         <motion.div
-          className="text-purple-600 dark:text-purple-400 mb-8"
+          className="text-gray-600 dark:text-gray-400 mb-8"
           animate={{ 
             y: [0, -5, 0],
           }}
@@ -46,7 +46,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-800 text-white rounded-lg font-semibold transition-colors"
           >
             <Home className="w-4 h-4" />
             Go Home

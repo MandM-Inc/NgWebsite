@@ -7,7 +7,7 @@
 /* Ensure dark mode works properly */
 @layer base {
   :root {
-    color-scheme: light;
+    color-scheme: dark;
   }
   
   :root.dark {
@@ -20,21 +20,73 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  /* Primary palette (green) */
-  --purple-primary: #059669;
-  --purple-light: #34d399;
-  --purple-dark: #047857;
+  --background: #0a0a0b; /* Very dark gray with subtle purple hint */
+  --foreground: #e5e7eb; /* Light gray */
+  /* Subtle purple-blue accents */
+  --primary: #8b5cf6; /* Purple */
+  --primary-light: #a78bfa; /* Light purple */
+  --primary-dark: #7c3aed; /* Dark purple */
+  --accent: #64748b; /* Slate */
+  --accent-light: #94a3b8; /* Light slate */
+  --accent-dark: #475569; /* Dark slate */
+  /* Subtle gradient stops */
+  --grad-start: #1e293b; /* Dark slate */
+  --grad-via: #334155; /* Medium slate */
+  --grad-end: #475569; /* Slate */
 }
 
 .dark {
-  --background: #030712;
-  --foreground: #f3f4f6;
-  /* Primary palette (green) */
-  --purple-primary: #10b981;
-  --purple-light: #34d399;
-  --purple-dark: #065f46;
+  --background: #0a0a0b; /* Very dark gray */
+  --foreground: #f1f5f9; /* Light slate */
+  /* Subtle purple-blue accents */
+  --primary: #a78bfa; /* Light purple */
+  --primary-light: #c4b5fd; /* Very light purple */
+  --primary-dark: #8b5cf6; /* Purple */
+  --accent: #94a3b8; /* Light slate */
+  --accent-light: #cbd5e1; /* Very light slate */
+  --accent-dark: #64748b; /* Slate */
+  /* Subtle gradient stops */
+  --grad-start: #1e293b; /* Dark slate */
+  --grad-via: #334155; /* Medium slate */
+  --grad-end: #475569; /* Slate */
+}
+
+/* Subtle theme overrides */
+.theme-subtle {
+  /* Light mode subtle gradient + accents */
+  --primary: #9333ea; /* Purple-600 */
+  --primary-light: #a855f7; /* Purple-500 */
+  --primary-dark: #7e22ce; /* Purple-700 */
+  --accent: #2563eb; /* Blue-600 */
+  --accent-light: #3b82f6; /* Blue-500 */
+  --accent-dark: #1d4ed8; /* Blue-700 */
+  --grad-start: #f3e8ff; /* Purple-50 */
+  --grad-via: #e9d5ff; /* Purple-100 */
+  --grad-end: #dbeafe; /* Blue-100 */
+}
+
+.dark.theme-subtle {
+  /* Dark mode subtle gradient + accents */
+  --primary: #a78bfa; /* Purple-400 */
+  --primary-light: #c4b5fd; /* Purple-300 */
+  --primary-dark: #9333ea; /* Purple-600 */
+  --accent: #60a5fa; /* Blue-400 */
+  --accent-light: #93c5fd; /* Blue-300 */
+  --accent-dark: #3b82f6; /* Blue-500 */
+  --grad-start: #1e1b4b; /* Indigo-950 */
+  --grad-via: #312e81; /* Indigo-900 */
+  --grad-end: #1e3a8a; /* Blue-900 */
+}
+
+/* Subtle glass + text helpers */
+.theme-subtle .glass-panel {
+  @apply bg-white/80 dark:bg-purple-950/60 backdrop-blur-md border border-purple-300/40 dark:border-purple-400/20 shadow-md;
+}
+.theme-subtle .glass-nav {
+  @apply bg-white/75 dark:bg-purple-950/65 backdrop-blur-md border-b border-purple-300/40 dark:border-purple-400/20;
+}
+.theme-subtle .text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400;
 }
 
 /* Remove @theme inline for now - may cause issues */
@@ -44,7 +96,7 @@ html {
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: 'Inter', system-ui, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -56,10 +108,7 @@ body {
 /* Better default focus styles */
 :focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px theme('colors.purple.500') , 0 0 0 4px #fff;
-}
-.dark :focus-visible {
-  box-shadow: 0 0 0 2px theme('colors.purple.500') , 0 0 0 4px theme('colors.gray.950');
+  box-shadow: 0 0 0 2px var(--primary), 0 0 0 4px var(--primary-dark);
 }
 
 /* Custom scrollbar */
@@ -69,15 +118,15 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-900;
+  @apply bg-gray-900;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-purple-400 dark:bg-purple-600 rounded-full;
+  @apply bg-gray-700 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-purple-500 dark:bg-purple-500;
+  @apply bg-gray-600;
 }
 
 /* LaTeX styles */
@@ -103,7 +152,7 @@ body {
   top: 0;
   left: 0;
   height: 3px;
-  background: var(--purple-primary);
+  background: var(--primary);
   z-index: 50;
   transition: width 0.2s ease;
 }
@@ -127,11 +176,7 @@ body {
   font-family: 'Crimson Text', 'Georgia', serif;
   font-size: 1.125rem;
   line-height: 1.75;
-  color: #374151;
-}
-
-.dark .markdown-content {
-  color: #e5e7eb;
+  color: var(--foreground);
 }
 
 .markdown-content h1 {
@@ -184,36 +229,54 @@ body {
 }
 
 .markdown-content a {
-  @apply text-purple-600 dark:text-purple-400 underline decoration-purple-300 dark:decoration-purple-700 decoration-2 underline-offset-2 hover:decoration-purple-500 dark:hover:decoration-purple-500 transition-colors;
+  @apply underline decoration-2 underline-offset-2 transition-colors;
+  color: var(--accent-light);
+  text-decoration-color: var(--accent);
+}
+
+.markdown-content a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent-light);
 }
 
 .markdown-content strong {
-  @apply font-semibold text-gray-900 dark:text-gray-100;
+  @apply font-semibold;
+  color: var(--primary-light);
 }
 
 .markdown-content em {
-  @apply italic text-gray-800 dark:text-gray-200;
+  @apply italic;
+  color: var(--foreground);
+  opacity: 0.9;
 }
 
 .markdown-content code {
-  @apply bg-purple-50 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm;
+  @apply px-1.5 py-0.5 rounded text-sm;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.3);
   font-family: 'JetBrains Mono', 'Consolas', monospace;
   font-weight: 500;
 }
 
 .markdown-content pre {
-  @apply bg-gray-900 dark:bg-gray-950 p-6 rounded-xl overflow-x-auto mb-6 shadow-lg;
+  @apply p-6 rounded-xl overflow-x-auto mb-6 shadow-lg;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.2);
   font-family: 'JetBrains Mono', 'Consolas', monospace;
   font-size: 0.875rem;
   line-height: 1.7;
 }
 
 .markdown-content pre code {
-  @apply bg-transparent p-0 text-gray-100;
+  @apply bg-transparent p-0;
+  color: var(--foreground);
+  border: none;
 }
 
 .markdown-content blockquote {
-  @apply border-l-4 border-purple-400 dark:border-purple-600 pl-6 pr-4 py-1 my-8 bg-purple-50 dark:bg-purple-950/20 rounded-r-lg;
+  @apply border-l-4 pl-6 pr-4 py-1 my-8 rounded-r-lg;
+  border-color: var(--primary);
+  background: linear-gradient(90deg, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
   font-style: italic;
   font-size: 1.1rem;
 }
@@ -235,22 +298,39 @@ body {
 }
 
 .markdown-content table th {
-  @apply bg-purple-100 dark:bg-purple-900/30 px-4 py-3 text-left font-semibold;
+  @apply px-4 py-3 text-left font-semibold;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
 }
 
 .markdown-content table td {
-  @apply border-t border-gray-200 dark:border-gray-700 px-4 py-3;
+  @apply border-t px-4 py-3;
+  border-color: rgba(139, 92, 246, 0.2);
 }
 
 .markdown-content table tr:hover {
-  @apply bg-gray-50 dark:bg-gray-800/50;
+  background: rgba(139, 92, 246, 0.05);
 }
 
 .markdown-content hr {
-  @apply my-12 border-gray-300 dark:border-gray-700;
+  @apply my-12;
+  border-color: rgba(139, 92, 246, 0.3);
 }
 
 /* Selection styles */
 .markdown-content ::selection {
-  @apply bg-purple-200 dark:bg-purple-800;
+  background: rgba(139, 92, 246, 0.3);
+  color: white;
+}
+
+/* Glassmorphism helpers */
+@layer components {
+  .glass-panel {
+    @apply bg-gray-900/80 backdrop-blur-md border border-gray-800 shadow-lg;
+  }
+  .glass-nav {
+    @apply bg-gray-950/90 backdrop-blur-md border-b border-gray-800;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-slate-200 via-purple-300 to-slate-200;
+  }
 }

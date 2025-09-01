@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
-import { ThemeProvider } from "@/lib/theme";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import ClientErrorHandler from "@/components/ClientErrorHandler";
-import Script from "next/script";
+ 
 
 export const metadata: Metadata = {
   title: "NeuroGeneration - Official Website",
@@ -22,24 +21,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className="antialiased">
-        <Script
-          id="theme-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(() => {
-  try {
-    var stored = localStorage.getItem('theme');
-    var theme = stored ? stored : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    var root = document.documentElement;
-    root.classList.remove('light','dark');
-    root.classList.add(theme);
-  } catch (e) {}
-})();`,
-          }}
-        />
         <ErrorBoundary>
           <AuthProvider>
-            <ThemeProvider>
               <ClientErrorHandler />
               <a
               href="#main-content"
@@ -54,7 +37,6 @@ export default function RootLayout({
               </main>
               <Footer />
             </div>
-            </ThemeProvider>
           </AuthProvider>
         </ErrorBoundary>
       </body>

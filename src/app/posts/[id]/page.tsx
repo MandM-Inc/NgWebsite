@@ -149,7 +149,7 @@ export default function PostDetailPage() {
   if (loading) {
     return (
       <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-500"></div>
       </main>
     )
   }
@@ -177,7 +177,7 @@ export default function PostDetailPage() {
           <header className="mb-12 text-center">
             <div className="mb-6">
               {post.tag && (
-                <span className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/30 rounded-full">
+                <span className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/30 rounded-full">
                   <TagIcon className="w-4 h-4" />
                   {post.tag}
                 </span>
@@ -228,7 +228,7 @@ export default function PostDetailPage() {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-purple-600 dark:text-purple-400 hover:underline"
+                      className="text-gray-700 dark:text-gray-300 hover:underline"
                     >
                       {children}
                     </a>
@@ -243,7 +243,7 @@ export default function PostDetailPage() {
           {/* Comments Section */}
           <section className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-8">
             <h2 className="text-3xl font-serif font-bold mb-8 text-gray-900 dark:text-white flex items-center gap-3">
-              <svg className="w-8 h-8 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-8 h-8 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
               Comments ({comments.length})
@@ -259,7 +259,7 @@ export default function PostDetailPage() {
                     placeholder="Your name"
                     value={newComment.name}
                     onChange={(e) => setNewComment({ ...newComment, name: e.target.value })}
-                    className="px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                    className="px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all"
                     required
                   />
                   <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
@@ -275,7 +275,7 @@ export default function PostDetailPage() {
                     value={newComment.content}
                     onChange={(e) => setNewComment({ ...newComment, content: e.target.value })}
                     rows={4}
-                    className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none transition-all"
+                    className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent resize-none transition-all"
                     required
                   />
                 </div>
@@ -283,7 +283,7 @@ export default function PostDetailPage() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-8 py-3 bg-gray-700 hover:bg-gray-800 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {submitting ? (
                       <span className="flex items-center">
@@ -326,7 +326,7 @@ export default function PostDetailPage() {
                   >
                     <div className="flex items-start gap-4">
                       {/* Avatar placeholder */}
-                      <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
+                      <div className="w-10 h-10 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
                         {comment.author_name.charAt(0).toUpperCase()}
                       </div>
                       

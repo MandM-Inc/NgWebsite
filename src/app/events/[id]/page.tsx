@@ -10,6 +10,7 @@ import rehypeKatex from 'rehype-katex'
 import { supabase } from '@/lib/supabase'
 import { Event, Comment } from '@/types/database'
 import { CalendarIcon, TagIcon, ClockIcon } from '@/components/Icons'
+import { Button } from '@/components/Button'
 import 'katex/dist/katex.min.css'
 
 export default function EventDetailPage() {
@@ -193,22 +194,22 @@ export default function EventDetailPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-500"></div>
       </main>
     )
   }
 
   if (!event) {
     return (
-      <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <main className="min-h-screen flex items-center justify-center">
         <p className="text-gray-600 dark:text-gray-400">Event not found.</p>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <main className="min-h-screen">
       {/* Reading progress bar */}
       <div className="reading-progress" style={{ width: `${readingProgress}%` }} />
       
@@ -229,7 +230,7 @@ export default function EventDetailPage() {
                     eventStatus.status === 'ongoing' 
                       ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
                       : eventStatus.status === 'today' || eventStatus.status === 'tomorrow'
-                      ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300'
+                      ? 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200'
                       : eventStatus.status === 'upcoming'
                       ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
                       : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
@@ -246,7 +247,7 @@ export default function EventDetailPage() {
             {/* Tag */}
             {event.tag && (
               <div className="mb-4">
-                <span className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/30 rounded-full">
+                <span className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/30 rounded-full">
                   <TagIcon className="w-4 h-4" />
                   {event.tag}
                 </span>
@@ -259,36 +260,36 @@ export default function EventDetailPage() {
             
             {/* Event Details Grid */}
             <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-8">
-              <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6">
-                <h3 className="text-sm font-semibold text-purple-900 dark:text-purple-200 mb-3 uppercase tracking-wide">Start Time</h3>
+              <div className="glass-panel rounded-xl p-6">
+                <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 uppercase tracking-wide">Start Time</h3>
                 <div className="space-y-2">
                   <div className="flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300">
-                    <CalendarIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                    <CalendarIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
                     <span className="font-medium">{formatDate(event.start_date)}</span>
                   </div>
                   <div className="flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300">
-                    <ClockIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                    <ClockIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
                     <span className="font-medium">{formatTime(event.start_date)}</span>
                   </div>
                 </div>
               </div>
               
-              <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6">
-                <h3 className="text-sm font-semibold text-purple-900 dark:text-purple-200 mb-3 uppercase tracking-wide">End Time</h3>
+              <div className="glass-panel rounded-xl p-6">
+                <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 uppercase tracking-wide">End Time</h3>
                 <div className="space-y-2">
                   <div className="flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300">
-                    <CalendarIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                    <CalendarIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
                     <span className="font-medium">{formatDate(event.end_date)}</span>
                   </div>
                   <div className="flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300">
-                    <ClockIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                    <ClockIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
                     <span className="font-medium">{formatTime(event.end_date)}</span>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400 pb-8 border-b border-gray-200 dark:border-gray-700">
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400 pb-8 border-b border-white/20 dark:border-white/10">
               <div className="flex items-center gap-2">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -315,7 +316,7 @@ export default function EventDetailPage() {
           </header>
 
           {/* Event Content */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-8 md:p-12 mb-12">
+          <div className="glass-panel rounded-xl p-8 md:p-12 mb-12">
             <div className="markdown-content prose prose-lg dark:prose-invert max-w-none">
               <ReactMarkdown
                 remarkPlugins={[remarkMath, remarkBreaks]}
@@ -333,7 +334,7 @@ export default function EventDetailPage() {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-purple-600 dark:text-purple-400 hover:underline"
+                      className="text-gray-700 dark:text-gray-300 hover:underline"
                     >
                       {children}
                     </a>
@@ -346,16 +347,16 @@ export default function EventDetailPage() {
           </div>
 
           {/* Comments Section */}
-          <section className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-8">
+          <section className="glass-panel rounded-xl p-8">
             <h2 className="text-3xl font-serif font-bold mb-8 text-gray-900 dark:text-white flex items-center gap-3">
-              <svg className="w-8 h-8 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-8 h-8 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
               Comments ({comments.length})
             </h2>
 
             {/* Comment Form */}
-            <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 mb-10">
+            <div className="rounded-xl p-6 mb-10 bg-white/40 dark:bg-white/5 border border-white/20 dark:border-white/10 backdrop-blur">
               <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Leave a Comment</h3>
               <form onSubmit={handleCommentSubmit}>
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
@@ -364,7 +365,7 @@ export default function EventDetailPage() {
                     placeholder="Your name"
                     value={newComment.name}
                     onChange={(e) => setNewComment({ ...newComment, name: e.target.value })}
-                    className="px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                    className="px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all bg-white/60 dark:bg-white/5 border border-white/30 dark:border-white/10 placeholder:text-gray-400 text-gray-900 dark:text-white"
                     required
                   />
                   <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
@@ -380,16 +381,12 @@ export default function EventDetailPage() {
                     value={newComment.content}
                     onChange={(e) => setNewComment({ ...newComment, content: e.target.value })}
                     rows={4}
-                    className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent resize-none transition-all bg-white/60 dark:bg-white/5 border border-white/30 dark:border-white/10 placeholder:text-gray-400 text-gray-900 dark:text-white"
                     required
                   />
                 </div>
                 <div className="flex items-center justify-between">
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
+                  <Button type="submit" disabled={submitting} className="px-8 py-3">
                     {submitting ? (
                       <span className="flex items-center">
                         <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -401,7 +398,7 @@ export default function EventDetailPage() {
                     ) : (
                       'Post Comment'
                     )}
-                  </button>
+                  </Button>
                   <span className="text-sm text-gray-500 dark:text-gray-400">
                     {newComment.content.length}/500 characters
                   </span>
@@ -427,11 +424,11 @@ export default function EventDetailPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 hover:shadow-md transition-shadow"
+                    className="glass-panel rounded-xl p-6 hover:shadow-md transition-shadow"
                   >
                     <div className="flex items-start gap-4">
                       {/* Avatar placeholder */}
-                      <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
+                      <div className="w-10 h-10 bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
                         {comment.author_name.charAt(0).toUpperCase()}
                       </div>
                       

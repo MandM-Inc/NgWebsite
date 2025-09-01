@@ -12,7 +12,7 @@ export default function FAQPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-center mb-12 text-gray-900 dark:text-white">
             Frequently Asked Questions
           </h1>
           
@@ -24,7 +24,7 @@ export default function FAQPage() {
             <div className="flex justify-center">
               <Link 
                 href="/"
-                className="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-full transition-colors duration-200"
+                className="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-gray-700 hover:bg-gray-800 rounded-full transition-colors duration-200"
               >
                 Back to Homepage
               </Link>

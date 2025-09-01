@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { useAuth } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import MarkdownEditor from '@/components/MarkdownEditor'
+import ImageUpload from '@/components/ImageUpload'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,6 +24,7 @@ export default function NewEventPage() {
     is_draft: false
   })
   const [saving, setSaving] = useState(false)
+  const [eventId, setEventId] = useState<string | null>(null)
 
   useEffect(() => {
     if (!isAdmin) {
@@ -44,7 +46,7 @@ export default function NewEventPage() {
       // Format duration as PostgreSQL interval
       const duration = `${event.duration_hours}:${event.duration_minutes.toString().padStart(2, '0')}:00`
 
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('events')
         .insert({
           title: event.title,
@@ -58,6 +60,11 @@ export default function NewEventPage() {
         .single()
 
       if (error) throw error
+      
+      // Store the event ID for image uploads
+      if (data) {
+        setEventId(data.id)
+      }
 
       router.push('/admin/content')
     } catch (error) {
@@ -66,6 +73,10 @@ export default function NewEventPage() {
     } finally {
       setSaving(false)
     }
+  }
+
+  function handleImageInserted(markdownText: string) {
+    setEvent({ ...event, content: event.content + '\n\n' + markdownText + '\n\n' })
   }
 
   return (
@@ -179,6 +190,14 @@ export default function NewEventPage() {
                   value={event.content}
                   onChange={(content) => setEvent({ ...event, content })}
                   placeholder="Write your event description here... You can use Markdown and LaTeX!"
+                />
+              </div>
+
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+                <ImageUpload
+                  onImageInserted={handleImageInserted}
+                  entityType="events"
+                  entityId={eventId || 'temp'}
                 />
               </div>
 
