@@ -253,7 +253,7 @@ export default function EditPostPage() {
                 {uploadError && (
                   <p className="mt-2 text-sm text-red-600 dark:text-red-400">{uploadError}</p>
                 )}
-                <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">Images are uploaded to the '{IMAGES_BUCKET}' bucket and inserted into content as Markdown.</p>
+                <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">Images are uploaded to the &apos;{IMAGES_BUCKET}&apos; bucket and inserted into content as Markdown.</p>
               </div>
 
               <div>
