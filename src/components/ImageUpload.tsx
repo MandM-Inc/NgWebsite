@@ -169,7 +169,7 @@ export default function ImageUpload({ onImageInserted, entityType, entityId, cla
               className="max-w-xs max-h-48 rounded-lg border border-gray-200 dark:border-gray-700"
             />
             <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-              {imageFile?.name} ({(imageFile?.size || 0 / 1024 / 1024).toFixed(2)} MB)
+              {imageFile?.name} ({((imageFile?.size || 0) / 1024 / 1024).toFixed(2)} MB)
             </div>
           </div>
         </div>

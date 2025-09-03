@@ -1,6 +1,6 @@
 'use client'
 
-// Global error handler for unhandled promise rejections
+// Global error handler for unhandled promise rejections and global errors
 export function setupGlobalErrorHandlers() {
   if (typeof window !== 'undefined') {
     // Handle unhandled promise rejections
