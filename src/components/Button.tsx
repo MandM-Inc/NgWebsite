@@ -5,14 +5,14 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-lg font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-none font-semibold btn-animate focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-700 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
-        primary: 'bg-purple-600 text-white hover:bg-purple-700',
-        secondary: 'border border-gray-600 text-gray-200 hover:bg-gray-800',
-        subtle: 'bg-gray-900 text-gray-100 hover:bg-gray-800 border border-gray-800',
-        link: 'text-purple-400 underline-offset-4 hover:underline hover:text-purple-300',
+        primary: 'bg-purple-800 text-white hover:bg-purple-700',
+        secondary: 'border border-purple-700/40 text-white/80 hover:bg-black',
+        subtle: 'bg-black text-white/80 hover:bg-black border border-purple-700/40',
+        link: 'text-purple-600 underline-offset-4 hover:underline hover:text-purple-500',
       },
       size: {
         sm: 'h-9 px-3 text-sm',
@@ -50,5 +50,3 @@ export function ButtonLink({ className, variant, size, href, ...props }: ButtonL
     <Link href={href} className={cn(buttonVariants({ variant, size }), className)} {...props} />
   )
 }
-
-

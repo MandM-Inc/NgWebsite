@@ -195,7 +195,7 @@ export default function EventDetailPage() {
   if (loading) {
     return (
       <main className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-500"></div>
+        <div className="animate-spin rounded-none h-12 w-12 border-b-2 border-purple-700"></div>
       </main>
     )
   }
@@ -203,7 +203,7 @@ export default function EventDetailPage() {
   if (!event) {
     return (
       <main className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-600 dark:text-gray-400">Event not found.</p>
+        <p className="text-white/60 dark:text-white/70">Event not found.</p>
       </main>
     )
   }
@@ -226,17 +226,17 @@ export default function EventDetailPage() {
               {(() => {
                 const eventStatus = getEventStatus(event.start_date, event.end_date)
                 return (
-                  <span className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full ${
+                  <span className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-none ${
                     eventStatus.status === 'ongoing' 
                       ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
                       : eventStatus.status === 'today' || eventStatus.status === 'tomorrow'
-                      ? 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200'
+                      ? 'bg-purple-900/20 dark:bg-black text-white dark:text-white/80'
                       : eventStatus.status === 'upcoming'
-                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                      ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-500'
+                      : 'bg-purple-900/10 dark:bg-purple-900/40 text-white/60 dark:text-white/70'
                   }`}>
                     {eventStatus.status === 'ongoing' && (
-                      <span className="w-2 h-2 bg-green-500 rounded-full" />
+                      <span className="w-2 h-2 bg-green-500 rounded-none" />
                     )}
                     {eventStatus.label}
                   </span>
@@ -247,49 +247,49 @@ export default function EventDetailPage() {
             {/* Tag */}
             {event.tag && (
               <div className="mb-4">
-                <span className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/30 rounded-full">
+                <span className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white/80 dark:text-white/80 bg-purple-900/10 dark:bg-black/30 rounded-none">
                   <TagIcon className="w-4 h-4" />
                   {event.tag}
                 </span>
               </div>
             )}
             
-            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-8 text-gray-900 dark:text-white leading-tight">
+            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-8 text-white dark:text-white leading-tight">
               {event.title}
             </h1>
             
             {/* Event Details Grid */}
             <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-8">
-              <div className="glass-panel rounded-xl p-6">
-                <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 uppercase tracking-wide">Start Time</h3>
+              <div className="glass-panel rounded-none p-6">
+                <h3 className="text-sm font-semibold text-white/80 dark:text-white/80 mb-3 uppercase tracking-wide">Start Time</h3>
                 <div className="space-y-2">
-                  <div className="flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300">
-                    <CalendarIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                  <div className="flex items-center justify-center gap-2 text-white/80 dark:text-white/80">
+                    <CalendarIcon className="w-5 h-5 text-white/60 dark:text-white/70" />
                     <span className="font-medium">{formatDate(event.start_date)}</span>
                   </div>
-                  <div className="flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300">
-                    <ClockIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                  <div className="flex items-center justify-center gap-2 text-white/80 dark:text-white/80">
+                    <ClockIcon className="w-5 h-5 text-white/60 dark:text-white/70" />
                     <span className="font-medium">{formatTime(event.start_date)}</span>
                   </div>
                 </div>
               </div>
               
-              <div className="glass-panel rounded-xl p-6">
-                <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 uppercase tracking-wide">End Time</h3>
+              <div className="glass-panel rounded-none p-6">
+                <h3 className="text-sm font-semibold text-white/80 dark:text-white/80 mb-3 uppercase tracking-wide">End Time</h3>
                 <div className="space-y-2">
-                  <div className="flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300">
-                    <CalendarIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                  <div className="flex items-center justify-center gap-2 text-white/80 dark:text-white/80">
+                    <CalendarIcon className="w-5 h-5 text-white/60 dark:text-white/70" />
                     <span className="font-medium">{formatDate(event.end_date)}</span>
                   </div>
-                  <div className="flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300">
-                    <ClockIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                  <div className="flex items-center justify-center gap-2 text-white/80 dark:text-white/80">
+                    <ClockIcon className="w-5 h-5 text-white/60 dark:text-white/70" />
                     <span className="font-medium">{formatTime(event.end_date)}</span>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400 pb-8 border-b border-white/20 dark:border-white/10">
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/60 dark:text-white/70 pb-8 border-b border-white/20 dark:border-white/10">
               <div className="flex items-center gap-2">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -316,7 +316,7 @@ export default function EventDetailPage() {
           </header>
 
           {/* Event Content */}
-          <div className="glass-panel rounded-xl p-8 md:p-12 mb-12">
+          <div className="glass-panel rounded-none p-8 md:p-12 mb-12">
             <div className="markdown-content prose prose-lg dark:prose-invert max-w-none">
               <ReactMarkdown
                 remarkPlugins={[remarkMath, remarkBreaks]}
@@ -326,7 +326,7 @@ export default function EventDetailPage() {
                     <img
                       src={src}
                       alt={alt}
-                      className="rounded-lg shadow-md my-6 max-w-full h-auto"
+                      className="rounded-none shadow-md my-6 max-w-full h-auto"
                     />
                   ),
                   a: ({ href, children }) => (
@@ -334,7 +334,7 @@ export default function EventDetailPage() {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-700 dark:text-gray-300 hover:underline"
+                      className="text-white/80 dark:text-white/80 hover:underline"
                     >
                       {children}
                     </a>
@@ -347,17 +347,17 @@ export default function EventDetailPage() {
           </div>
 
           {/* Comments Section */}
-          <section className="glass-panel rounded-xl p-8">
-            <h2 className="text-3xl font-serif font-bold mb-8 text-gray-900 dark:text-white flex items-center gap-3">
-              <svg className="w-8 h-8 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <section className="glass-panel rounded-none p-8">
+            <h2 className="text-3xl font-serif font-bold mb-8 text-white dark:text-white flex items-center gap-3">
+              <svg className="w-8 h-8 text-white/60 dark:text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
               Comments ({comments.length})
             </h2>
 
             {/* Comment Form */}
-            <div className="rounded-xl p-6 mb-10 bg-white/40 dark:bg-white/5 border border-white/20 dark:border-white/10 backdrop-blur">
-              <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Leave a Comment</h3>
+            <div className="rounded-none p-6 mb-10 bg-white/40 dark:bg-white/5 border border-white/20 dark:border-white/10 backdrop-blur">
+              <h3 className="text-lg font-semibold mb-4 text-white dark:text-white">Leave a Comment</h3>
               <form onSubmit={handleCommentSubmit}>
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <input
@@ -365,10 +365,10 @@ export default function EventDetailPage() {
                     placeholder="Your name"
                     value={newComment.name}
                     onChange={(e) => setNewComment({ ...newComment, name: e.target.value })}
-                    className="px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all bg-white/60 dark:bg-white/5 border border-white/30 dark:border-white/10 placeholder:text-gray-400 text-gray-900 dark:text-white"
+                    className="px-4 py-3 rounded-none focus:outline-none focus:ring-2 focus:ring-purple-700 focus:border-transparent transition-all bg-white/60 dark:bg-white/5 border border-white/30 dark:border-white/10 placeholder:text-white/70 text-white dark:text-white btn-animate"
                     required
                   />
-                  <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center text-sm text-white/60 dark:text-white/70">
                     <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -381,12 +381,12 @@ export default function EventDetailPage() {
                     value={newComment.content}
                     onChange={(e) => setNewComment({ ...newComment, content: e.target.value })}
                     rows={4}
-                    className="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent resize-none transition-all bg-white/60 dark:bg-white/5 border border-white/30 dark:border-white/10 placeholder:text-gray-400 text-gray-900 dark:text-white"
+                    className="w-full px-4 py-3 rounded-none focus:outline-none focus:ring-2 focus:ring-purple-700 focus:border-transparent resize-none transition-all bg-white/60 dark:bg-white/5 border border-white/30 dark:border-white/10 placeholder:text-white/70 text-white dark:text-white"
                     required
                   />
                 </div>
                 <div className="flex items-center justify-between">
-                  <Button type="submit" disabled={submitting} className="px-8 py-3">
+                  <Button type="submit" disabled={submitting} className="px-8 py-3 btn-animate">
                     {submitting ? (
                       <span className="flex items-center">
                         <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -399,7 +399,7 @@ export default function EventDetailPage() {
                       'Post Comment'
                     )}
                   </Button>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="text-sm text-white/60 dark:text-white/70">
                     {newComment.content.length}/500 characters
                   </span>
                 </div>
@@ -410,10 +410,10 @@ export default function EventDetailPage() {
             <div className="space-y-4">
               {comments.length === 0 ? (
                 <div className="text-center py-12">
-                  <svg className="w-16 h-16 mx-auto text-gray-300 dark:text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-16 h-16 mx-auto text-white/80 dark:text-white/60 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
-                  <p className="text-gray-500 dark:text-gray-400 text-lg">
+                  <p className="text-white/60 dark:text-white/70 text-lg">
                     No comments yet. Be the first to share your thoughts!
                   </p>
                 </div>
@@ -424,24 +424,24 @@ export default function EventDetailPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="glass-panel rounded-xl p-6 hover:shadow-md transition-shadow"
+                    className="glass-panel rounded-none p-6 hover:shadow-md transition-shadow"
                   >
                     <div className="flex items-start gap-4">
                       {/* Avatar placeholder */}
-                      <div className="w-10 h-10 bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
+                      <div className="w-10 h-10 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 rounded-none flex items-center justify-center text-white font-semibold flex-shrink-0">
                         {comment.author_name.charAt(0).toUpperCase()}
                       </div>
                       
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-2">
-                          <h4 className="font-semibold text-gray-900 dark:text-white">
+                          <h4 className="font-semibold text-white dark:text-white">
                             {comment.author_name}
                           </h4>
-                          <time className="text-sm text-gray-500 dark:text-gray-400">
+                          <time className="text-sm text-white/60 dark:text-white/70">
                             {formatDateTime(comment.created_at)}
                           </time>
                         </div>
-                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <p className="text-white/80 dark:text-white/80 leading-relaxed">
                           {comment.content}
                         </p>
                         

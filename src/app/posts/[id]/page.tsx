@@ -148,22 +148,22 @@ export default function PostDetailPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-500"></div>
+      <main className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
+        <div className="animate-spin rounded-none h-12 w-12 border-b-2 border-purple-700"></div>
       </main>
     )
   }
 
   if (!post) {
     return (
-      <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <p className="text-gray-600 dark:text-gray-400">Post not found.</p>
+      <main className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
+        <p className="text-white/60 dark:text-white/70">Post not found.</p>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <main className="min-h-screen bg-white dark:bg-black">
       {/* Reading progress bar */}
       <div className="reading-progress" style={{ width: `${readingProgress}%` }} />
       
@@ -177,18 +177,18 @@ export default function PostDetailPage() {
           <header className="mb-12 text-center">
             <div className="mb-6">
               {post.tag && (
-                <span className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/30 rounded-full">
+                <span className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white/80 dark:text-white/80 bg-purple-900/10 dark:bg-black/30 rounded-none">
                   <TagIcon className="w-4 h-4" />
                   {post.tag}
                 </span>
               )}
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-8 text-gray-900 dark:text-white leading-tight">
+            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-8 text-white dark:text-white leading-tight">
               {post.title}
             </h1>
             
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400 pb-8 border-b border-gray-200 dark:border-gray-700">
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/60 dark:text-white/70 pb-8 border-b border-purple-700/40 dark:border-purple-700/40">
               <div className="flex items-center gap-2">
                 <CalendarIcon className="w-4 h-4" />
                 <span>{formatDate(post.published_date)}</span>
@@ -210,7 +210,7 @@ export default function PostDetailPage() {
           </header>
 
           {/* Post Content */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-8 md:p-12 mb-12">
+          <div className="bg-white dark:bg-black rounded-none shadow-sm p-8 md:p-12 mb-12">
             <div className="markdown-content prose prose-lg dark:prose-invert max-w-none">
               <ReactMarkdown
                 remarkPlugins={[remarkMath, remarkBreaks]}
@@ -220,7 +220,7 @@ export default function PostDetailPage() {
                     <img
                       src={src}
                       alt={alt}
-                      className="rounded-lg shadow-md my-6 max-w-full h-auto"
+                      className="rounded-none shadow-md my-6 max-w-full h-auto"
                     />
                   ),
                   a: ({ href, children }) => (
@@ -228,7 +228,7 @@ export default function PostDetailPage() {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-700 dark:text-gray-300 hover:underline"
+                      className="text-white/80 dark:text-white/80 hover:underline"
                     >
                       {children}
                     </a>
@@ -241,17 +241,17 @@ export default function PostDetailPage() {
           </div>
 
           {/* Comments Section */}
-          <section className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-8">
-            <h2 className="text-3xl font-serif font-bold mb-8 text-gray-900 dark:text-white flex items-center gap-3">
-              <svg className="w-8 h-8 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <section className="bg-white dark:bg-black rounded-none shadow-sm p-8">
+            <h2 className="text-3xl font-serif font-bold mb-8 text-white dark:text-white flex items-center gap-3">
+              <svg className="w-8 h-8 text-white/60 dark:text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
               Comments ({comments.length})
             </h2>
 
             {/* Comment Form */}
-            <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 mb-10">
-              <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Leave a Comment</h3>
+            <div className="bg-white dark:bg-black/50 rounded-none p-6 mb-10">
+              <h3 className="text-lg font-semibold mb-4 text-white dark:text-white">Leave a Comment</h3>
               <form onSubmit={handleCommentSubmit}>
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <input
@@ -259,10 +259,10 @@ export default function PostDetailPage() {
                     placeholder="Your name"
                     value={newComment.name}
                     onChange={(e) => setNewComment({ ...newComment, name: e.target.value })}
-                    className="px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all"
+                    className="px-4 py-3 bg-white dark:bg-black border border-purple-700/40 dark:border-purple-700/40 rounded-none focus:outline-none focus:ring-2 focus:ring-purple-700 focus:border-transparent transition-all btn-animate"
                     required
                   />
-                  <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center text-sm text-white/60 dark:text-white/70">
                     <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -275,7 +275,7 @@ export default function PostDetailPage() {
                     value={newComment.content}
                     onChange={(e) => setNewComment({ ...newComment, content: e.target.value })}
                     rows={4}
-                    className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent resize-none transition-all"
+                    className="w-full px-4 py-3 bg-white dark:bg-black border border-purple-700/40 dark:border-purple-700/40 rounded-none focus:outline-none focus:ring-2 focus:ring-purple-700 focus:border-transparent resize-none transition-all"
                     required
                   />
                 </div>
@@ -283,7 +283,7 @@ export default function PostDetailPage() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="px-8 py-3 bg-gray-700 hover:bg-gray-800 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-8 py-3 bg-purple-900/40 hover:bg-black text-white rounded-none font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed btn-animate"
                   >
                     {submitting ? (
                       <span className="flex items-center">
@@ -297,7 +297,7 @@ export default function PostDetailPage() {
                       'Post Comment'
                     )}
                   </button>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="text-sm text-white/60 dark:text-white/70">
                     {newComment.content.length}/500 characters
                   </span>
                 </div>
@@ -308,10 +308,10 @@ export default function PostDetailPage() {
             <div className="space-y-4">
               {comments.length === 0 ? (
                 <div className="text-center py-12">
-                  <svg className="w-16 h-16 mx-auto text-gray-300 dark:text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-16 h-16 mx-auto text-white/80 dark:text-white/60 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
-                  <p className="text-gray-500 dark:text-gray-400 text-lg">
+                  <p className="text-white/60 dark:text-white/70 text-lg">
                     No comments yet. Be the first to share your thoughts!
                   </p>
                 </div>
@@ -322,24 +322,24 @@ export default function PostDetailPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 hover:shadow-md transition-shadow"
+                    className="bg-white dark:bg-black/50 rounded-none p-6 hover:shadow-md transition-shadow"
                   >
                     <div className="flex items-start gap-4">
                       {/* Avatar placeholder */}
-                      <div className="w-10 h-10 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
+                      <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-800 rounded-none flex items-center justify-center text-white font-semibold flex-shrink-0">
                         {comment.author_name.charAt(0).toUpperCase()}
                       </div>
                       
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-2">
-                          <h4 className="font-semibold text-gray-900 dark:text-white">
+                          <h4 className="font-semibold text-white dark:text-white">
                             {comment.author_name}
                           </h4>
-                          <time className="text-sm text-gray-500 dark:text-gray-400">
+                          <time className="text-sm text-white/60 dark:text-white/70">
                             {formatDate(comment.created_at)}
                           </time>
                         </div>
-                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <p className="text-white/80 dark:text-white/80 leading-relaxed">
                           {comment.content}
                         </p>
                         

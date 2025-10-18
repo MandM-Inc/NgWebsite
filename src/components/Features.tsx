@@ -45,7 +45,7 @@ export default function Features() {
           <h2 className="text-base font-semibold leading-7 text-gradient">
             Tech Stack
           </h2>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+          <p className="mt-2 text-3xl font-bold tracking-tight text-white dark:text-white sm:text-4xl">
             Everything you need to build modern web apps
           </p>
         </div>
@@ -62,15 +62,15 @@ export default function Features() {
                 key={feature.name}
                 variants={itemFade(18, 0.45)}
                 whileHover={prefersReduced ? undefined : { y: -4, scale: 1.02 }}
-                className="glass-panel flex flex-col p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+                className="glass-panel flex flex-col p-6 rounded-none shadow-lg hover:shadow-xl transition-shadow"
               >
-                <dt className="text-base font-semibold leading-7 text-gray-900 dark:text-white">
-                  <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600">
+                <dt className="text-base font-semibold leading-7 text-white dark:text-white">
+                  <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-none bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800">
                     <span className="text-2xl">{feature.icon}</span>
                   </div>
                   {feature.name}
                 </dt>
-                <dd className="mt-1 flex flex-auto flex-col text-base leading-7 text-gray-600 dark:text-gray-300">
+                <dd className="mt-1 flex flex-auto flex-col text-base leading-7 text-white/60 dark:text-white/80">
                   <p className="flex-auto">{feature.description}</p>
                 </dd>
               </motion.div>

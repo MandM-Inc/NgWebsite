@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
 import { useAuth } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import MarkdownEditor from '@/components/MarkdownEditor'
@@ -49,7 +48,6 @@ export default function NewPostPage() {
 
       if (error) throw error
       
-      // Store the post ID for image uploads
       if (data) {
         setPostId(data.id)
       }
@@ -68,91 +66,85 @@ export default function NewPostPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <main className="min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-serif font-bold text-gray-900 dark:text-white">
-              Create New Post
-            </h1>
-            <button
-              onClick={() => router.push('/admin/content')}
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
-            >
-              Cancel
-            </button>
-          </div>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-white">
+            Create New Post
+          </h1>
+          <button
+            onClick={() => router.push('/admin/content')}
+            className="text-white/70 hover:text-white transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  value={post.title}
-                  onChange={(e) => setPost({ ...post, title: e.target.value })}
-                  className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  placeholder="Enter post title"
-                />
-              </div>
+        <div className="card p-8">
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-white/80 mb-2">
+                Title
+              </label>
+              <input
+                type="text"
+                value={post.title}
+                onChange={(e) => setPost({ ...post, title: e.target.value })}
+                className="w-full px-4 py-2 bg-black border border-purple-700/40 rounded-none text-white focus:outline-none focus:ring-2 focus:ring-purple-800"
+                placeholder="Enter post title"
+              />
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Tag
-                </label>
-                <input
-                  type="text"
-                  value={post.tag}
-                  onChange={(e) => setPost({ ...post, tag: e.target.value })}
-                  className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  placeholder="Enter tag (optional)"
-                />
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-white/80 mb-2">
+                Tag
+              </label>
+              <input
+                type="text"
+                value={post.tag}
+                onChange={(e) => setPost({ ...post, tag: e.target.value })}
+                className="w-full px-4 py-2 bg-black border border-purple-700/40 rounded-none text-white focus:outline-none focus:ring-2 focus:ring-purple-800"
+                placeholder="Enter tag (optional)"
+              />
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Content
-                </label>
-                <MarkdownEditor
-                  value={post.content}
-                  onChange={(content) => setPost({ ...post, content })}
-                  placeholder="Write your post content here... You can use Markdown and LaTeX!"
-                />
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-white/80 mb-2">
+                Content
+              </label>
+              <MarkdownEditor
+                value={post.content}
+                onChange={(content) => setPost({ ...post, content })}
+                placeholder="Write your post content here... You can use Markdown and LaTeX!"
+              />
+            </div>
 
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                <ImageUpload
-                  onImageInserted={handleImageInserted}
-                  entityType="posts"
-                  entityId={postId || 'temp'}
-                />
-              </div>
+            <div className="border-t border-purple-700/40 pt-6">
+              <ImageUpload
+                onImageInserted={handleImageInserted}
+                entityType="posts"
+                entityId={postId || 'temp'}
+              />
+            </div>
 
-              <div className="flex justify-end gap-4">
-                <button
-                  onClick={() => handleSave(true)}
-                  disabled={saving}
-                  className="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50"
-                >
-                  Save as Draft
-                </button>
-                <button
-                  onClick={() => handleSave(false)}
-                  disabled={saving}
-                  className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50"
-                >
-                  Publish
-                </button>
-              </div>
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={() => handleSave(true)}
+                disabled={saving}
+                className="px-6 py-2 bg-purple-900/40 hover:bg-purple-900/40 text-white rounded-none font-semibold transition-colors disabled:opacity-50 btn-animate"
+              >
+                Save as Draft
+              </button>
+              <button
+                onClick={() => handleSave(false)}
+                disabled={saving}
+                className="px-6 py-2 bg-purple-800 hover:bg-purple-700 text-white rounded-none font-semibold transition-colors disabled:opacity-50 btn-animate"
+              >
+                Publish
+              </button>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </main>
   )

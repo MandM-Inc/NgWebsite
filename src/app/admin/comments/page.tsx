@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { useAuth } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import { Comment, Post, Event } from '@/types/database'
@@ -29,21 +28,13 @@ export default function CommentsManagementPage() {
       router.push('/admin')
       return
     }
-    const loadData = async () => {
-      try {
-        await fetchComments()
-      } catch (error) {
-        console.error('Error in useEffect:', error)
-      }
-    }
-    loadData()
+    fetchComments()
   }, [isAdmin, router])
 
   async function fetchComments() {
     try {
       setError(null)
       
-      // Fetch comments with related posts and events
       const { data: commentsData, error: commentsError } = await supabase
         .from('comments')
         .select('*')
@@ -51,24 +42,17 @@ export default function CommentsManagementPage() {
 
       if (commentsError) throw commentsError
 
-      // Fetch related posts and events
       const postIds = [...new Set(commentsData?.filter(c => c.post_id).map(c => c.post_id) || [])]
       const eventIds = [...new Set(commentsData?.filter(c => c.event_id).map(c => c.event_id) || [])]
 
       const [postsResult, eventsResult] = await Promise.all([
-        postIds.length > 0 
-          ? supabase.from('posts').select('id, title').in('id', postIds)
-          : { data: [] },
-        eventIds.length > 0
-          ? supabase.from('events').select('id, title').in('id', eventIds)
-          : { data: [] }
+        postIds.length > 0 ? supabase.from('posts').select('id, title').in('id', postIds) : { data: [] },
+        eventIds.length > 0 ? supabase.from('events').select('id, title').in('id', eventIds) : { data: [] }
       ])
 
-      // Map posts and events by ID for quick lookup
       const postsMap = new Map(postsResult.data?.map(p => [p.id, p]) || [])
       const eventsMap = new Map(eventsResult.data?.map(e => [e.id, e]) || [])
 
-      // Combine comments with their related content
       const enrichedComments = commentsData?.map(comment => ({
         ...comment,
         post: comment.post_id ? postsMap.get(comment.post_id) : undefined,
@@ -85,18 +69,16 @@ export default function CommentsManagementPage() {
   }
 
   async function deleteComment(id: string) {
-    if (!confirm('Are you sure you want to delete this comment? This action cannot be undone.')) return
+    if (!confirm('Are you sure you want to delete this comment?')) return
 
     setActionLoading(`delete-${id}`)
     try {
       const { error } = await supabase.from('comments').delete().eq('id', id)
       if (error) throw error
-      
-      // Update local state immediately
       setComments(comments.filter(comment => comment.id !== id))
     } catch (error) {
       console.error('Error deleting comment:', error)
-      alert('Failed to delete comment: ' + (error instanceof Error ? error.message : 'Unknown error'))
+      alert('Failed to delete comment')
     } finally {
       setActionLoading(null)
     }
@@ -112,11 +94,6 @@ export default function CommentsManagementPage() {
     })
   }
 
-  const truncateContent = (content: string, maxLength: number = 150) => {
-    if (content.length <= maxLength) return content
-    return content.substring(0, maxLength) + '...'
-  }
-
   const filteredComments = comments.filter(comment => {
     if (filter === 'posts') return comment.post_id !== null
     if (filter === 'events') return comment.event_id !== null
@@ -125,21 +102,18 @@ export default function CommentsManagementPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-none h-12 w-12 border-b-2 border-purple-800"></div>
       </main>
     )
   }
 
   if (error) {
     return (
-      <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <main className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
-          <button
-            onClick={fetchComments}
-            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg"
-          >
+          <p className="text-red-400 mb-4">{error}</p>
+          <button onClick={fetchComments} className="px-4 py-2 bg-purple-800 hover:bg-purple-700 text-white rounded-none btn-animate">
             Try Again
           </button>
         </div>
@@ -148,125 +122,83 @@ export default function CommentsManagementPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <main className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-          <h1 className="text-3xl font-serif font-bold text-gray-900 dark:text-white">
-            Comment Management
-          </h1>
-          <Link
-            href="/admin/dashboard"
-            className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg text-sm font-semibold transition-colors"
-          >
+          <h1 className="text-3xl font-bold text-white">Comment Management</h1>
+          <Link href="/admin/dashboard" className="px-4 py-2 bg-purple-900/30 hover:bg-purple-900/40 text-white rounded-none text-sm font-semibold transition-colors btn-animate">
             Back to Dashboard
           </Link>
         </div>
 
-        {/* Filter Tabs */}
         <div className="flex space-x-4 mb-6">
           <button
             onClick={() => setFilter('all')}
-            className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-              filter === 'all'
-                ? 'bg-purple-600 text-white'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+            className={`px-4 py-2 rounded-none font-semibold transition-colors ${
+              filter === 'all' ? 'bg-purple-800 text-white' : 'bg-purple-900/30 text-white/80 hover:bg-purple-900/40'
             }`}
           >
             All Comments ({comments.length})
           </button>
           <button
             onClick={() => setFilter('posts')}
-            className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-              filter === 'posts'
-                ? 'bg-purple-600 text-white'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+            className={`px-4 py-2 rounded-none font-semibold transition-colors ${
+              filter === 'posts' ? 'bg-purple-800 text-white' : 'bg-purple-900/30 text-white/80 hover:bg-purple-900/40'
             }`}
           >
             Post Comments ({comments.filter(c => c.post_id).length})
           </button>
           <button
             onClick={() => setFilter('events')}
-            className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-              filter === 'events'
-                ? 'bg-purple-600 text-white'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+            className={`px-4 py-2 rounded-none font-semibold transition-colors ${
+              filter === 'events' ? 'bg-purple-800 text-white' : 'bg-purple-900/30 text-white/80 hover:bg-purple-900/40'
             }`}
           >
             Event Comments ({comments.filter(c => c.event_id).length})
           </button>
         </div>
 
-        {/* Comments List */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+        <div className="card overflow-hidden">
           {filteredComments.length === 0 ? (
             <div className="p-8 text-center">
-              <p className="text-gray-600 dark:text-gray-400">
-                No comments found for the selected filter.
-              </p>
+              <p className="text-white/70">No comments found for the selected filter.</p>
             </div>
           ) : (
-            <div className="divide-y divide-gray-200 dark:divide-gray-700">
+            <div className="divide-y divide-purple-700/40">
               {filteredComments.map((comment) => (
-                <motion.div
-                  key={comment.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="p-6 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
-                >
+                <div key={comment.id} className="p-6 hover:bg-purple-900/30/50 transition-colors">
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-2">
-                        <h3 className="font-semibold text-gray-900 dark:text-white">
-                          {comment.author_name}
-                        </h3>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                          {formatDate(comment.created_at)}
-                        </span>
+                        <h3 className="font-semibold text-white">{comment.author_name}</h3>
+                        <span className="text-sm text-white/60">{formatDate(comment.created_at)}</span>
                       </div>
                       
-                      <p className="text-gray-700 dark:text-gray-300 mb-3">
-                        {truncateContent(comment.content)}
-                      </p>
+                      <p className="text-white/80 mb-3">{comment.content}</p>
                       
                       <div className="flex items-center gap-4 text-sm">
                         {comment.post && (
-                          <Link
-                            href={`/posts/${comment.post_id}`}
-                            target="_blank"
-                            className="flex items-center gap-1 text-purple-600 dark:text-purple-400 hover:underline"
-                          >
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
+                          <Link href={`/posts/${comment.post_id}`} target="_blank" className="text-purple-600 hover:text-purple-500">
                             Post: {comment.post.title}
                           </Link>
                         )}
                         {comment.event && (
-                          <Link
-                            href={`/events/${comment.event_id}`}
-                            target="_blank"
-                            className="flex items-center gap-1 text-purple-600 dark:text-purple-400 hover:underline"
-                          >
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
+                          <Link href={`/events/${comment.event_id}`} target="_blank" className="text-purple-600 hover:text-purple-500">
                             Event: {comment.event.title}
                           </Link>
                         )}
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => deleteComment(comment.id)}
-                        disabled={actionLoading === `delete-${comment.id}`}
-                        className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-sm transition-colors disabled:opacity-50"
-                      >
-                        {actionLoading === `delete-${comment.id}` ? '...' : 'Delete'}
-                      </button>
-                    </div>
+                    <button
+                      onClick={() => deleteComment(comment.id)}
+                      disabled={actionLoading === `delete-${comment.id}`}
+                      className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-sm transition-colors disabled:opacity-50 btn-animate"
+                    >
+                      {actionLoading === `delete-${comment.id}` ? '...' : 'Delete'}
+                    </button>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}

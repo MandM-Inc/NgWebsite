@@ -28,17 +28,17 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-          <div className="max-w-md w-full p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg text-center">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+        <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black">
+          <div className="max-w-md w-full p-8 bg-white dark:bg-black rounded-none shadow-lg text-center">
+            <h2 className="text-2xl font-bold text-white dark:text-white mb-4">
               Oops! Something went wrong
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-white/60 dark:text-white/70 mb-6">
               We apologize for the inconvenience. Please try refreshing the page.
             </p>
             <button
               onClick={() => window.location.reload()}
-              className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+              className="px-6 py-2 bg-purple-800 hover:bg-purple-700 text-white rounded-none transition-colors"
             >
               Refresh Page
             </button>

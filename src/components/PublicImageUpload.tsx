@@ -110,13 +110,13 @@ export default function PublicImageUpload({
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className="block w-full text-sm text-gray-500 dark:text-gray-400
+            className="block w-full text-sm text-white/60 dark:text-white/70
                      file:mr-4 file:py-2 file:px-4
-                     file:rounded-lg file:border-0
+                     file:rounded-none file:border-0
                      file:text-sm file:font-medium
                      file:bg-purple-50 file:text-purple-700
                      hover:file:bg-purple-100
-                     dark:file:bg-purple-900 dark:file:text-purple-300
+                     dark:file:bg-purple-900 dark:file:text-purple-500
                      dark:hover:file:bg-purple-800
                      file:cursor-pointer cursor-pointer"
           />
@@ -127,14 +127,14 @@ export default function PublicImageUpload({
             <button
               onClick={handleUpload}
               disabled={uploading}
-              className="px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-purple-400 text-white rounded-lg font-medium transition-colors text-sm"
+              className="px-4 py-2 bg-purple-800 hover:bg-purple-700 disabled:bg-purple-600 text-white rounded-none font-medium transition-colors text-sm"
             >
               {uploading ? 'Uploading...' : buttonText}
             </button>
             <button
               onClick={clearSelection}
               disabled={uploading}
-              className="px-4 py-2 bg-gray-500 hover:bg-gray-600 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors text-sm"
+              className="px-4 py-2 bg-white0 hover:bg-gray-600 disabled:bg-gray-400 text-white rounded-none font-medium transition-colors text-sm"
             >
               Clear
             </button>
@@ -144,7 +144,7 @@ export default function PublicImageUpload({
         {uploadedUrl && (
           <button
             onClick={clearSelection}
-            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors text-sm"
+            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-none font-medium transition-colors text-sm"
           >
             Upload Another
           </button>
@@ -152,13 +152,13 @@ export default function PublicImageUpload({
       </div>
 
       {error && (
-        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-none">
           <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
         </div>
       )}
 
       {uploadedUrl && (
-        <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+        <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-none">
           <p className="text-sm text-green-600 dark:text-green-400">
             ✅ Image uploaded successfully! 
           </p>
@@ -167,10 +167,10 @@ export default function PublicImageUpload({
               type="text"
               value={uploadedUrl}
               readOnly
-              className="w-full px-3 py-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-sm font-mono"
+              className="w-full px-3 py-1 bg-white dark:bg-black border border-purple-700/40 dark:border-purple-700/40 text-sm font-mono"
               onClick={(e) => e.currentTarget.select()}
             />
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-xs text-white/60 dark:text-white/70 mt-1">
               Click to select and copy the URL
             </p>
           </div>
@@ -179,21 +179,21 @@ export default function PublicImageUpload({
 
       {showPreview && preview && (
         <div className="space-y-2">
-          <p className="text-sm text-gray-600 dark:text-gray-400">Preview:</p>
+          <p className="text-sm text-white/60 dark:text-white/70">Preview:</p>
           <div className="relative inline-block">
             <img
               src={preview}
               alt="Preview"
-              className="max-w-xs max-h-48 rounded-lg border border-gray-200 dark:border-gray-700"
+              className="max-w-xs max-h-48 rounded-none border border-purple-700/40 dark:border-purple-700/40"
             />
-            <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+            <div className="mt-2 text-xs text-white/60 dark:text-white/70">
               {selectedFile?.name} ({((selectedFile?.size || 0) / 1024 / 1024).toFixed(2)} MB)
             </div>
           </div>
         </div>
       )}
 
-      <div className="text-xs text-gray-500 dark:text-gray-400">
+      <div className="text-xs text-white/60 dark:text-white/70">
         Supported formats: JPEG, PNG, WebP, GIF. Max file size: 5MB.
       </div>
     </div>

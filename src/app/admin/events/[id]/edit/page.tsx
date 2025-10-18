@@ -2,12 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { motion } from 'framer-motion'
 import { useAuth } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import MarkdownEditor from '@/components/MarkdownEditor'
 import ImageUpload from '@/components/ImageUpload'
-// import { Event } from '@/types/database'
 
 export const dynamic = 'force-dynamic'
 
@@ -123,20 +121,20 @@ export default function EditEventPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-none h-12 w-12 border-b-2 border-purple-800"></div>
       </main>
     )
   }
 
   if (error) {
     return (
-      <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <main className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
+          <p className="text-red-400 mb-4">{error}</p>
           <button
             onClick={() => router.push('/admin/content')}
-            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg"
+            className="px-4 py-2 bg-purple-800 hover:bg-purple-700 text-white rounded-none btn-animate"
           >
             Back to Content
           </button>
@@ -146,143 +144,137 @@ export default function EditEventPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <main className="min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-serif font-bold text-gray-900 dark:text-white">
-              Edit Event
-            </h1>
-            <button
-              onClick={() => router.push('/admin/content')}
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
-            >
-              Cancel
-            </button>
-          </div>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-white">
+            Edit Event
+          </h1>
+          <button
+            onClick={() => router.push('/admin/content')}
+            className="text-white/70 hover:text-white transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-            <div className="space-y-6">
+        <div className="card p-8">
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-white/80 mb-2">
+                Title
+              </label>
+              <input
+                type="text"
+                value={event.title}
+                onChange={(e) => setEvent({ ...event, title: e.target.value })}
+                className="w-full px-4 py-2 bg-black border border-purple-700/40 rounded-none text-white focus:outline-none focus:ring-2 focus:ring-purple-800"
+                placeholder="Enter event title"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-white/80 mb-2">
+                Tag
+              </label>
+              <input
+                type="text"
+                value={event.tag}
+                onChange={(e) => setEvent({ ...event, tag: e.target.value })}
+                className="w-full px-4 py-2 bg-black border border-purple-700/40 rounded-none text-white focus:outline-none focus:ring-2 focus:ring-purple-800"
+                placeholder="Enter tag (optional)"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Title
+                <label className="block text-sm font-medium text-white/80 mb-2">
+                  Start Date & Time
                 </label>
                 <input
-                  type="text"
-                  value={event.title}
-                  onChange={(e) => setEvent({ ...event, title: e.target.value })}
-                  className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  placeholder="Enter event title"
+                  type="datetime-local"
+                  value={event.start_date}
+                  onChange={(e) => setEvent({ ...event, start_date: e.target.value })}
+                  className="w-full px-4 py-2 bg-black border border-purple-700/40 rounded-none text-white focus:outline-none focus:ring-2 focus:ring-purple-800"
+                  required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Tag
+                <label className="block text-sm font-medium text-white/80 mb-2">
+                  Duration
                 </label>
-                <input
-                  type="text"
-                  value={event.tag}
-                  onChange={(e) => setEvent({ ...event, tag: e.target.value })}
-                  className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  placeholder="Enter tag (optional)"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Start Date & Time
-                  </label>
-                  <input
-                    type="datetime-local"
-                    value={event.start_date}
-                    onChange={(e) => setEvent({ ...event, start_date: e.target.value })}
-                    className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Duration
-                  </label>
-                  <div className="flex gap-2">
-                    <div className="flex-1">
-                      <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">Hours</label>
-                      <input
-                        type="number"
-                        min="0"
-                        max="24"
-                        value={hours}
-                        onChange={(e) => {
-                          const newHours = Math.max(0, Math.min(24, parseInt(e.target.value) || 0))
-                          setEvent({ ...event, duration: formatDuration(newHours, minutes) })
-                        }}
-                        className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">Minutes</label>
-                      <input
-                        type="number"
-                        min="0"
-                        max="59"
-                        step="15"
-                        value={minutes}
-                        onChange={(e) => {
-                          const newMinutes = Math.max(0, Math.min(59, parseInt(e.target.value) || 0))
-                          setEvent({ ...event, duration: formatDuration(hours, newMinutes) })
-                        }}
-                        className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      />
-                    </div>
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <label className="block text-xs text-white/70 mb-1">Hours</label>
+                    <input
+                      type="number"
+                      min="0"
+                      max="24"
+                      value={hours}
+                      onChange={(e) => {
+                        const newHours = Math.max(0, Math.min(24, parseInt(e.target.value) || 0))
+                        setEvent({ ...event, duration: formatDuration(newHours, minutes) })
+                      }}
+                      className="w-full px-3 py-2 bg-black border border-purple-700/40 rounded-none text-white focus:outline-none focus:ring-2 focus:ring-purple-800"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label className="block text-xs text-white/70 mb-1">Minutes</label>
+                    <input
+                      type="number"
+                      min="0"
+                      max="59"
+                      step="15"
+                      value={minutes}
+                      onChange={(e) => {
+                        const newMinutes = Math.max(0, Math.min(59, parseInt(e.target.value) || 0))
+                        setEvent({ ...event, duration: formatDuration(hours, newMinutes) })
+                      }}
+                      className="w-full px-3 py-2 bg-black border border-purple-700/40 rounded-none text-white focus:outline-none focus:ring-2 focus:ring-purple-800"
+                    />
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Content
-                </label>
-                <MarkdownEditor
-                  value={event.content}
-                  onChange={(content) => setEvent({ ...event, content })}
-                  placeholder="Write your event content here... You can use Markdown and LaTeX!"
-                />
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-white/80 mb-2">
+                Content
+              </label>
+              <MarkdownEditor
+                value={event.content}
+                onChange={(content) => setEvent({ ...event, content })}
+                placeholder="Write your event content here... You can use Markdown and LaTeX!"
+              />
+            </div>
 
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                <ImageUpload
-                  onImageInserted={handleImageInserted}
-                  entityType="events"
-                  entityId={eventId}
-                />
-              </div>
+            <div className="border-t border-purple-700/40 pt-6">
+              <ImageUpload
+                onImageInserted={handleImageInserted}
+                entityType="events"
+                entityId={eventId}
+              />
+            </div>
 
-              <div className="flex justify-end gap-4">
-                <button
-                  onClick={() => handleSave(true)}
-                  disabled={saving}
-                  className="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50"
-                >
-                  Save as Draft
-                </button>
-                <button
-                  onClick={() => handleSave(false)}
-                  disabled={saving}
-                  className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50"
-                >
-                  {event.is_draft ? 'Publish' : 'Update'}
-                </button>
-              </div>
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={() => handleSave(true)}
+                disabled={saving}
+                className="px-6 py-2 bg-purple-900/40 hover:bg-purple-900/40 text-white rounded-none font-semibold transition-colors disabled:opacity-50 btn-animate"
+              >
+                Save as Draft
+              </button>
+              <button
+                onClick={() => handleSave(false)}
+                disabled={saving}
+                className="px-6 py-2 bg-purple-800 hover:bg-purple-700 text-white rounded-none font-semibold transition-colors disabled:opacity-50 btn-animate"
+              >
+                {event.is_draft ? 'Publish' : 'Update'}
+              </button>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </main>
   )

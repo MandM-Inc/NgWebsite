@@ -113,7 +113,7 @@ export default function ImageUpload({ onImageInserted, entityType, entityId, cla
     <div className={`space-y-4 ${className}`}>
       <div className="flex items-center gap-4">
         <div className="flex-1">
-          <label htmlFor="image-upload" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="image-upload" className="block text-sm font-medium text-white/80 dark:text-white/80 mb-2">
             Upload Image
           </label>
           <input
@@ -121,13 +121,13 @@ export default function ImageUpload({ onImageInserted, entityType, entityId, cla
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className="block w-full text-sm text-gray-500 dark:text-gray-400
+            className="block w-full text-sm text-white/60 dark:text-white/70
                      file:mr-4 file:py-2 file:px-4
-                     file:rounded-lg file:border-0
+                     file:rounded-none file:border-0
                      file:text-sm file:font-medium
                      file:bg-purple-50 file:text-purple-700
                      hover:file:bg-purple-100
-                     dark:file:bg-purple-900 dark:file:text-purple-300
+                     dark:file:bg-purple-900 dark:file:text-purple-500
                      dark:hover:file:bg-purple-800
                      file:cursor-pointer cursor-pointer"
           />
@@ -138,14 +138,14 @@ export default function ImageUpload({ onImageInserted, entityType, entityId, cla
             <button
               onClick={handleImageUpload}
               disabled={uploading}
-              className="px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-purple-400 text-white rounded-lg font-medium transition-colors text-sm"
+              className="px-4 py-2 bg-purple-800 hover:bg-purple-700 disabled:bg-purple-600 text-white rounded-none font-medium transition-colors text-sm"
             >
               {uploading ? 'Uploading...' : 'Upload'}
             </button>
             <button
               onClick={clearSelection}
               disabled={uploading}
-              className="px-4 py-2 bg-gray-500 hover:bg-gray-600 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors text-sm"
+              className="px-4 py-2 bg-white0 hover:bg-gray-600 disabled:bg-gray-400 text-white rounded-none font-medium transition-colors text-sm"
             >
               Clear
             </button>
@@ -154,28 +154,28 @@ export default function ImageUpload({ onImageInserted, entityType, entityId, cla
       </div>
 
       {error && (
-        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-none">
           <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
         </div>
       )}
 
       {imagePreview && (
         <div className="space-y-2">
-          <p className="text-sm text-gray-600 dark:text-gray-400">Preview:</p>
+          <p className="text-sm text-white/60 dark:text-white/70">Preview:</p>
           <div className="relative inline-block">
             <img
               src={imagePreview}
               alt="Preview"
-              className="max-w-xs max-h-48 rounded-lg border border-gray-200 dark:border-gray-700"
+              className="max-w-xs max-h-48 rounded-none border border-purple-700/40 dark:border-purple-700/40"
             />
-            <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+            <div className="mt-2 text-xs text-white/60 dark:text-white/70">
               {imageFile?.name} ({((imageFile?.size || 0) / 1024 / 1024).toFixed(2)} MB)
             </div>
           </div>
         </div>
       )}
 
-      <div className="text-xs text-gray-500 dark:text-gray-400">
+      <div className="text-xs text-white/60 dark:text-white/70">
         Supported formats: JPEG, PNG, WebP, GIF. Max file size: 5MB.
       </div>
     </div>

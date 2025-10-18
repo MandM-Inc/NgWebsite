@@ -281,17 +281,17 @@ export default function MarkdownEditor({ value, onChange, placeholder }: Markdow
   ]
 
   return (
-    <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm">
+    <div className="border border-purple-700/40 dark:border-purple-700/40 rounded-none overflow-hidden shadow-sm">
       {/* Tabs */}
-      <div className="flex justify-between border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+      <div className="flex justify-between border-b border-purple-700/40 dark:border-purple-700/40 bg-white dark:bg-black">
         <div className="flex">
           <button
             type="button"
             onClick={() => setActiveTab('write')}
             className={`px-4 py-2 font-medium transition-colors ${
               activeTab === 'write'
-                ? 'text-purple-600 dark:text-purple-400 border-b-2 border-purple-600 dark:border-purple-400'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                ? 'text-purple-800 dark:text-purple-600 border-b-2 border-purple-800 dark:border-purple-600'
+                : 'text-white/60 dark:text-white/70 hover:text-white dark:hover:text-white'
             }`}
           >
             Write
@@ -301,8 +301,8 @@ export default function MarkdownEditor({ value, onChange, placeholder }: Markdow
             onClick={() => setActiveTab('preview')}
             className={`px-4 py-2 font-medium transition-colors ${
               activeTab === 'preview'
-                ? 'text-purple-600 dark:text-purple-400 border-b-2 border-purple-600 dark:border-purple-400'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                ? 'text-purple-800 dark:text-purple-600 border-b-2 border-purple-800 dark:border-purple-600'
+                : 'text-white/60 dark:text-white/70 hover:text-white dark:hover:text-white'
             }`}
           >
             Preview
@@ -311,7 +311,7 @@ export default function MarkdownEditor({ value, onChange, placeholder }: Markdow
         <button
           type="button"
           onClick={() => setShowHelp(!showHelp)}
-          className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
+          className="px-3 py-2 text-sm text-white/60 dark:text-white/70 hover:text-white dark:hover:text-white transition-colors"
           title="Formatting help"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -323,7 +323,7 @@ export default function MarkdownEditor({ value, onChange, placeholder }: Markdow
       {activeTab === 'write' ? (
         <>
           {/* Toolbar */}
-          <div className="flex flex-wrap items-center gap-2 p-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+          <div className="flex flex-wrap items-center gap-2 p-2 border-b border-purple-700/40 dark:border-purple-700/40 bg-white dark:bg-black">
             {toolbarGroups.map((group, groupIndex) => (
               <div key={group.name} className="flex items-center">
                 <div className="flex gap-1">
@@ -334,10 +334,10 @@ export default function MarkdownEditor({ value, onChange, placeholder }: Markdow
                       onClick={button.action}
                       title={button.title}
                       disabled={button.disabled || false}
-                      className={`px-2 py-1 text-sm font-medium rounded transition-colors ${
+                      className={`px-2 py-1 text-sm font-medium transition-colors ${
                         button.disabled
-                          ? 'text-gray-400 dark:text-gray-600 cursor-not-allowed'
-                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                          ? 'text-white/70 dark:text-white/60 cursor-not-allowed'
+                          : 'text-white/80 dark:text-white/80 hover:bg-purple-900/20 dark:hover:bg-purple-900/40'
                       }`}
                     >
                       {button.label}
@@ -358,26 +358,26 @@ export default function MarkdownEditor({ value, onChange, placeholder }: Markdow
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
-            className="w-full min-h-[400px] p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 resize-none focus:outline-none font-mono text-sm"
+            className="w-full min-h-[400px] p-4 bg-white dark:bg-black text-white dark:text-gray-100 resize-none focus:outline-none font-mono text-sm"
             spellCheck={true}
           />
           
           {/* Help Panel */}
           {showHelp && (
-            <div className="border-t border-gray-200 dark:border-gray-700 bg-purple-50 dark:bg-gray-800/50 p-4">
-              <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Formatting Guide</h4>
+            <div className="border-t border-purple-700/40 dark:border-purple-700/40 bg-purple-50 dark:bg-black/50 p-4">
+              <h4 className="text-sm font-semibold text-white/80 dark:text-white/80 mb-2">Formatting Guide</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 text-xs">
                 {formattingHelp.map((item) => (
                   <div key={item.syntax} className="flex items-center space-x-2">
-                    <code className="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-gray-700 dark:text-gray-300 font-mono">
+                    <code className="bg-purple-900/10 dark:bg-purple-900/40 px-1.5 py-0.5 text-white/80 dark:text-white/80 font-mono">
                       {item.syntax}
                     </code>
-                    <span className="text-gray-500 dark:text-gray-400">→</span>
-                    <span className="text-gray-700 dark:text-gray-300">{item.result}</span>
+                    <span className="text-white/60 dark:text-white/70">→</span>
+                    <span className="text-white/80 dark:text-white/80">{item.result}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-3 text-xs text-gray-600 dark:text-gray-400">
+              <div className="mt-3 text-xs text-white/60 dark:text-white/70">
                 <strong>Shortcuts:</strong> Cmd/Ctrl+B (bold), Cmd/Ctrl+I (italic), Cmd/Ctrl+K (link), Cmd/Ctrl+Z (undo), Cmd/Ctrl+Y (redo)
               </div>
             </div>
@@ -385,7 +385,7 @@ export default function MarkdownEditor({ value, onChange, placeholder }: Markdow
         </>
       ) : (
         /* Preview */
-        <div className="min-h-[400px] p-4 bg-white dark:bg-gray-900">
+        <div className="min-h-[400px] p-4 bg-white dark:bg-black">
           <div className="markdown-content prose prose-lg dark:prose-invert max-w-none">
             <ReactMarkdown
               remarkPlugins={[remarkMath]}
@@ -398,7 +398,7 @@ export default function MarkdownEditor({ value, onChange, placeholder }: Markdow
       )}
       
       {/* Status Bar */}
-      <div className="flex justify-between items-center px-4 py-2 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-600 dark:text-gray-400">
+      <div className="flex justify-between items-center px-4 py-2 bg-white dark:bg-black border-t border-purple-700/40 dark:border-purple-700/40 text-xs text-white/60 dark:text-white/70">
         <div className="flex gap-4">
           <span>{value.length} characters</span>
           <span>{value.split(/\s+/).filter(word => word.length > 0).length} words</span>
@@ -406,7 +406,7 @@ export default function MarkdownEditor({ value, onChange, placeholder }: Markdow
         </div>
         <div className="flex gap-2">
           {activeTab === 'write' && (
-            <span className="text-gray-500 dark:text-gray-500">
+            <span className="text-white/60 dark:text-white/60">
               {historyIndex > 0 && `${historyIndex} actions to undo`}
             </span>
           )}

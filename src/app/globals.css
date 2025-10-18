@@ -2,15 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
-/* Ensure dark mode works properly */
+/* Minimal Design System */
 @layer base {
   :root {
-    color-scheme: dark;
-  }
-  
-  :root.dark {
     color-scheme: dark;
   }
   
@@ -20,317 +16,195 @@
 }
 
 :root {
-  --background: #0a0a0b; /* Very dark gray with subtle purple hint */
-  --foreground: #e5e7eb; /* Light gray */
-  /* Subtle purple-blue accents */
-  --primary: #8b5cf6; /* Purple */
-  --primary-light: #a78bfa; /* Light purple */
-  --primary-dark: #7c3aed; /* Dark purple */
-  --accent: #64748b; /* Slate */
-  --accent-light: #94a3b8; /* Light slate */
-  --accent-dark: #475569; /* Dark slate */
-  /* Subtle gradient stops */
-  --grad-start: #1e293b; /* Dark slate */
-  --grad-via: #334155; /* Medium slate */
-  --grad-end: #475569; /* Slate */
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #6d28d9;
+  --border: rgba(109, 40, 217, 0.4);
+  --muted: rgba(255, 255, 255, 0.7);
 }
 
 .dark {
-  --background: #0a0a0b; /* Very dark gray */
-  --foreground: #f1f5f9; /* Light slate */
-  /* Subtle purple-blue accents */
-  --primary: #a78bfa; /* Light purple */
-  --primary-light: #c4b5fd; /* Very light purple */
-  --primary-dark: #8b5cf6; /* Purple */
-  --accent: #94a3b8; /* Light slate */
-  --accent-light: #cbd5e1; /* Very light slate */
-  --accent-dark: #64748b; /* Slate */
-  /* Subtle gradient stops */
-  --grad-start: #1e293b; /* Dark slate */
-  --grad-via: #334155; /* Medium slate */
-  --grad-end: #475569; /* Slate */
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #6d28d9;
+  --border: rgba(109, 40, 217, 0.4);
+  --muted: rgba(255, 255, 255, 0.7);
 }
-
-/* Subtle theme overrides */
-.theme-subtle {
-  /* Light mode subtle gradient + accents */
-  --primary: #9333ea; /* Purple-600 */
-  --primary-light: #a855f7; /* Purple-500 */
-  --primary-dark: #7e22ce; /* Purple-700 */
-  --accent: #2563eb; /* Blue-600 */
-  --accent-light: #3b82f6; /* Blue-500 */
-  --accent-dark: #1d4ed8; /* Blue-700 */
-  --grad-start: #f3e8ff; /* Purple-50 */
-  --grad-via: #e9d5ff; /* Purple-100 */
-  --grad-end: #dbeafe; /* Blue-100 */
-}
-
-.dark.theme-subtle {
-  /* Dark mode subtle gradient + accents */
-  --primary: #a78bfa; /* Purple-400 */
-  --primary-light: #c4b5fd; /* Purple-300 */
-  --primary-dark: #9333ea; /* Purple-600 */
-  --accent: #60a5fa; /* Blue-400 */
-  --accent-light: #93c5fd; /* Blue-300 */
-  --accent-dark: #3b82f6; /* Blue-500 */
-  --grad-start: #1e1b4b; /* Indigo-950 */
-  --grad-via: #312e81; /* Indigo-900 */
-  --grad-end: #1e3a8a; /* Blue-900 */
-}
-
-/* Subtle glass + text helpers */
-.theme-subtle .glass-panel {
-  @apply bg-white/80 dark:bg-purple-950/60 backdrop-blur-md border border-purple-300/40 dark:border-purple-400/20 shadow-md;
-}
-.theme-subtle .glass-nav {
-  @apply bg-white/75 dark:bg-purple-950/65 backdrop-blur-md border-b border-purple-300/40 dark:border-purple-400/20;
-}
-.theme-subtle .text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400;
-}
-
-/* Remove @theme inline for now - may cause issues */
 
 html {
-  transition: color-scheme 0.3s ease;
+  scroll-behavior: smooth;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', system-ui, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
-/* Better default focus styles */
+/* Minimal focus styles */
 :focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--primary), 0 0 0 4px var(--primary-dark);
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
-/* Custom scrollbar */
+/* Simple scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-900;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-700 rounded-full;
+  background: rgba(109, 40, 217, 0.3);
+  border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-600;
+  background: rgba(109, 40, 217, 0.5);
 }
 
-/* LaTeX styles */
-.katex {
-  font-size: 1.15em;
+/* Minimal markdown styles */
+.markdown-content {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--foreground);
 }
 
-.katex-display {
-  @apply my-8;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0.5rem 0;
+.markdown-content h1 {
+  @apply text-3xl font-bold mt-8 mb-4;
+  line-height: 1.2;
 }
 
-/* Post card styles */
-.post-card {
-  @apply transition-shadow duration-200;
+.markdown-content h2 {
+  @apply text-2xl font-bold mt-6 mb-3;
+  line-height: 1.3;
 }
 
-/* Reading progress indicator */
-.reading-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  background: var(--primary);
-  z-index: 50;
-  transition: width 0.2s ease;
+.markdown-content h3 {
+  @apply text-xl font-semibold mt-5 mb-2;
+  line-height: 1.4;
 }
 
-/* Unified transitions */
-* {
-  transition-timing-function: ease-in-out;
+.markdown-content h4 {
+  @apply text-lg font-semibold mt-4 mb-2;
 }
 
-/* Disable animations for users who prefer reduced motion */
+.markdown-content p {
+  @apply mb-4;
+}
+
+.markdown-content ul {
+  @apply list-disc mb-4 ml-6 space-y-1;
+}
+
+.markdown-content ol {
+  @apply list-decimal mb-4 ml-6 space-y-1;
+}
+
+.markdown-content li {
+  @apply pl-1;
+}
+
+.markdown-content a {
+  @apply underline;
+  color: var(--primary);
+}
+
+.markdown-content a:hover {
+  opacity: 0.8;
+}
+
+.markdown-content strong {
+  @apply font-semibold;
+}
+
+.markdown-content code {
+  @apply px-1.5 py-0.5 text-sm;
+  background: rgba(109, 40, 217, 0.1);
+  border: 1px solid var(--border);
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+}
+
+.markdown-content pre {
+  @apply p-4 overflow-x-auto mb-4;
+  background: rgba(109, 40, 217, 0.1);
+  border: 1px solid var(--border);
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.markdown-content pre code {
+  @apply bg-transparent p-0 border-0;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 pl-4 py-1 my-4;
+  border-color: var(--primary);
+  font-style: italic;
+}
+
+.markdown-content img {
+  @apply max-w-full h-auto rounded my-6;
+}
+
+.markdown-content video {
+  @apply max-w-full h-auto rounded my-6;
+}
+
+.markdown-content table {
+  @apply w-full mb-4;
+}
+
+.markdown-content table th {
+  @apply px-4 py-2 text-left font-semibold border-b;
+  border-color: var(--border);
+}
+
+.markdown-content table td {
+  @apply px-4 py-2 border-b;
+  border-color: var(--border);
+}
+
+.markdown-content hr {
+  @apply my-8 border-t;
+  border-color: var(--border);
+}
+
+/* Minimal component helpers */
+@layer components {
+  .card {
+    @apply bg-black border-2 border-purple-700/40 shadow-lg shadow-purple-700/10;
+  }
+  
+  .nav-bar {
+    @apply bg-black border-b-2 border-purple-700/40;
+  }
+  
+  /* Universal button animation */
+  .btn-animate {
+    @apply transition-all duration-200 ease-out;
+    @apply hover:scale-105 hover:shadow-lg;
+    @apply active:scale-95;
+  }
+}
+
+/* Respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-/* Markdown styles - Enhanced Typography */
-.markdown-content {
-  font-family: 'Crimson Text', 'Georgia', serif;
-  font-size: 1.125rem;
-  line-height: 1.75;
-  color: var(--foreground);
-}
-
-.markdown-content h1 {
-  @apply text-4xl font-bold mt-10 mb-6;
-  font-family: 'Inter', system-ui, sans-serif;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
-}
-
-.markdown-content h2 {
-  @apply text-3xl font-bold mt-8 mb-4;
-  font-family: 'Inter', system-ui, sans-serif;
-  letter-spacing: -0.02em;
-  line-height: 1.3;
-}
-
-.markdown-content h3 {
-  @apply text-2xl font-semibold mt-6 mb-3;
-  font-family: 'Inter', system-ui, sans-serif;
-  letter-spacing: -0.015em;
-  line-height: 1.4;
-}
-
-.markdown-content h4 {
-  @apply text-xl font-semibold mt-5 mb-2;
-  font-family: 'Inter', system-ui, sans-serif;
-}
-
-.markdown-content p {
-  @apply mb-6;
-  text-align: left;
-  hyphens: auto;
-}
-
-.markdown-content p:first-of-type {
-  @apply text-xl leading-relaxed mb-8;
-}
-
-.markdown-content ul {
-  @apply list-disc mb-6 ml-6 space-y-2;
-}
-
-.markdown-content ol {
-  @apply list-decimal mb-6 ml-6 space-y-2;
-}
-
-.markdown-content li {
-  @apply pl-2;
-  line-height: 1.7;
-}
-
-.markdown-content a {
-  @apply underline decoration-2 underline-offset-2 transition-colors;
-  color: var(--accent-light);
-  text-decoration-color: var(--accent);
-}
-
-.markdown-content a:hover {
-  color: var(--accent);
-  text-decoration-color: var(--accent-light);
-}
-
-.markdown-content strong {
-  @apply font-semibold;
-  color: var(--primary-light);
-}
-
-.markdown-content em {
-  @apply italic;
-  color: var(--foreground);
-  opacity: 0.9;
-}
-
-.markdown-content code {
-  @apply px-1.5 py-0.5 rounded text-sm;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
-  border: 1px solid rgba(139, 92, 246, 0.3);
-  font-family: 'JetBrains Mono', 'Consolas', monospace;
-  font-weight: 500;
-}
-
-.markdown-content pre {
-  @apply p-6 rounded-xl overflow-x-auto mb-6 shadow-lg;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
-  border: 1px solid rgba(139, 92, 246, 0.2);
-  font-family: 'JetBrains Mono', 'Consolas', monospace;
-  font-size: 0.875rem;
-  line-height: 1.7;
-}
-
-.markdown-content pre code {
-  @apply bg-transparent p-0;
-  color: var(--foreground);
-  border: none;
-}
-
-.markdown-content blockquote {
-  @apply border-l-4 pl-6 pr-4 py-1 my-8 rounded-r-lg;
-  border-color: var(--primary);
-  background: linear-gradient(90deg, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
-  font-style: italic;
-  font-size: 1.1rem;
-}
-
-.markdown-content blockquote p {
-  @apply mb-0;
-}
-
-.markdown-content img {
-  @apply max-w-full h-auto rounded-xl my-8 shadow-xl;
-}
-
-.markdown-content video {
-  @apply max-w-full h-auto rounded-xl my-8 shadow-xl;
-}
-
-.markdown-content table {
-  @apply w-full mb-6 overflow-hidden rounded-lg shadow-md;
-}
-
-.markdown-content table th {
-  @apply px-4 py-3 text-left font-semibold;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
-}
-
-.markdown-content table td {
-  @apply border-t px-4 py-3;
-  border-color: rgba(139, 92, 246, 0.2);
-}
-
-.markdown-content table tr:hover {
-  background: rgba(139, 92, 246, 0.05);
-}
-
-.markdown-content hr {
-  @apply my-12;
-  border-color: rgba(139, 92, 246, 0.3);
-}
-
-/* Selection styles */
-.markdown-content ::selection {
-  background: rgba(139, 92, 246, 0.3);
-  color: white;
-}
-
-/* Glassmorphism helpers */
-@layer components {
-  .glass-panel {
-    @apply bg-gray-900/80 backdrop-blur-md border border-gray-800 shadow-lg;
-  }
-  .glass-nav {
-    @apply bg-gray-950/90 backdrop-blur-md border-b border-gray-800;
-  }
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-slate-200 via-purple-300 to-slate-200;
-  }
+/* Performance: disable expensive effects */
+* {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
