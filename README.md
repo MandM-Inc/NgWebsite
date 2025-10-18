@@ -49,11 +49,14 @@ yarn install
 cp .env.local.example .env.local
 ```
 
-Edit `.env.local` with your Supabase credentials:
+Edit `.env.local` with your Supabase credentials and admin password:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_ADMIN_PASSWORD=your_secure_password_here
 ```
+
+**IMPORTANT**: Change `NEXT_PUBLIC_ADMIN_PASSWORD` to a strong, unique password. Use a password manager to generate a secure password (20+ characters with mixed case, numbers, and symbols).
 
 4. Set up the database:
    - Follow the instructions in [DATABASE_SETUP.md](DATABASE_SETUP.md) (use `supabase/schema-clean.sql`; optional `supabase/demo-content.sql`)
@@ -93,15 +96,23 @@ src/
 
 ## Admin Access
 
-Access the admin panel at `/admin` with default password: `ng-admin-2024`.
+Access the admin panel at `/admin` with the password you set in `NEXT_PUBLIC_ADMIN_PASSWORD` environment variable.
 
-Notes:
-- Storage keys (demo only; see `src/lib/auth.tsx`):
-  - `localStorage`: `isAdmin` = `"true"` after login; `adminPasswordHash` = base64-encoded password.
-  - `sessionStorage`: `adminPassword` (plaintext; used by `/admin/settings` to verify current password).
-- Default password fallback: if `adminPasswordHash` is missing or invalid, the app falls back to `ng-admin-2024`.
-- Change the password at `/admin/settings`: verifies the current session password and updates both storages; then redirects to `/admin/dashboard`.
-- Production: implement proper authentication (e.g., Supabase Auth) and drop the dev "Allow all operations" RLS policies in `supabase/schema-clean.sql` (see `DATABASE_SETUP.md`).
+### Security Notes:
+- **Never commit `.env.local`** to version control - it contains your admin password
+- Password is loaded from `NEXT_PUBLIC_ADMIN_PASSWORD` environment variable
+- Storage keys (demo authentication only; see `src/lib/auth.tsx`):
+  - `localStorage`: `isAdmin` = `"true"` after login; `adminPasswordHash` = base64-encoded password
+  - `sessionStorage`: `adminPassword` (plaintext; used by `/admin/settings` to verify current password)
+- Change the password at `/admin/settings`: verifies the current session password and updates both storages; then redirects to `/admin/dashboard`
+- **Production recommendation**: Implement proper server-side authentication (e.g., Supabase Auth with JWT-based roles) and drop the dev "Allow all operations" RLS policies in `supabase/schema-clean.sql` (see `DATABASE_SETUP.md`)
+
+### Important Security Warning:
+The current authentication system is client-side only and suitable for demos/development. For production use, you should:
+1. Implement server-side authentication (Supabase Auth recommended)
+2. Use proper password hashing (bcrypt/argon2) on the server
+3. Add JWT-based role validation
+4. Remove permissive RLS policies from the database
 
 ## Analytics & Click Tracking
 

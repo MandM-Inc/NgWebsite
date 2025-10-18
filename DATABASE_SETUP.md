@@ -132,7 +132,9 @@ After setting up the database:
 1. Refresh your website
 2. Navigate to `/posts` or `/events`
 3. If using demo content, you should see 2 posts and 2 events
-4. Try the admin panel at `/admin` (password: `ng-admin-2024`)
+4. Try the admin panel at `/admin` (use the password you set in your `.env.local` file under `NEXT_PUBLIC_ADMIN_PASSWORD`)
+
+**Security Note**: Make sure you've set a strong password in your `.env.local` file. Never use the default example password in production!
 
 ## Need Help?
 

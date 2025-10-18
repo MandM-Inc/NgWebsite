@@ -12,7 +12,12 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 // Simple admin authentication - in production, use proper authentication
-const DEFAULT_PASSWORD = 'ng-admin-2024' // Default password
+// Password is now loaded from environment variable for security
+const DEFAULT_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || ''
+
+if (!DEFAULT_PASSWORD) {
+  console.error('SECURITY WARNING: NEXT_PUBLIC_ADMIN_PASSWORD environment variable is not set!')
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false)
